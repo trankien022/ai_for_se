@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// ===== UNIFIED USER SCHEMA (Minimal & Clean) =====
+// ===== UNIFIED USER SCHEMA (Merged Version) =====
 const userSchema = new mongoose.Schema({
   // === Authentication (Username OR Google) ===
   username: {
@@ -64,6 +64,52 @@ const userSchema = new mongoose.Schema({
     enum: ['username', 'google'],
     required: true,
     default: 'username',
+  },
+  
+  // === Google Profile Info (Extended) ===
+  googleProfile: {
+    displayName: String,
+    photo: String,
+    locale: String,
+    raw: Object,
+  },
+  
+  // === Google Tokens ===
+  googleTokens: {
+    accessToken: String,
+    refreshToken: String,
+    tokenExpiry: Date,
+  },
+  
+  // === Login Statistics ===
+  loginHistory: [
+    {
+      loginAt: {
+        type: Date,
+        default: Date.now,
+      },
+      loginMethod: {
+        type: String,
+        enum: ['google', 'email', 'phone', 'username'],
+      },
+      ipAddress: String,
+      userAgent: String,
+    },
+  ],
+  lastLogin: {
+    type: Date,
+  },
+  loginCount: {
+    type: Number,
+    default: 0,
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+  isTwoFactorEnabled: {
+    type: Boolean,
+    default: false,
   },
   
   // === Timestamps ===

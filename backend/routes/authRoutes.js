@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const passport = require('passport');
 const { generateToken, authenticateToken } = require('../utils/jwt');
 const User = require('../models/User');

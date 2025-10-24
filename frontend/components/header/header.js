@@ -34,6 +34,28 @@ document.addEventListener("DOMContentLoaded", function () {
                 <span class="font-[60px] text-[16px] text-[#FFF] truncate max-w-[90px]" title="${userName}">${userName}</span>
               </div>
             </button>
+            <div id="user-dropdown" class="z-50 origin-top-right absolute right-0 mt-2 min-w-[250px] shadow-lg bg-white ring-1 ring-black ring-opacity-5 border-1 border-[#E6E6E6] rounded-[8px] hidden">
+              <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 btn w-full" role="menuitem" href="#" style="text-align: left;">
+                  <div class="flex items-center">
+                    <img src="/images/icons/list-order.png" class="w-6 h-6 mr-2">
+                    <span class="text-[16px]">Đơn hàng của tôi</span>
+                  </div>
+                </a>
+                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 btn w-full" role="menuitem" href="#" style="text-align: left;">
+                  <div class="flex items-center">
+                    <img src="/images/icons/account.png" class="w-6 h-6 mr-2">
+                    <span class="text-[16px]">Tài khoản</span>
+                  </div>
+                </a>
+                <a id="logout-button" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 btn w-full" role="menuitem" style="text-align: left;">
+                  <div class="flex items-center">
+                    <img src="/images/icons/log-out.png" class="w-6 h-6 mr-2">
+                    <span class="text-[16px]">Đăng xuất</span>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         `;
         
