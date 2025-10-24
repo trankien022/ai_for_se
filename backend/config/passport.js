@@ -15,81 +15,45 @@ module.exports = function(passport) {
           // Tìm user theo googleId
           let user = await User.findOne({ googleId: profile.id });
 
-          const newLoginEntry = {
-            loginAt: new Date(),
-            loginMethod: 'google',
-            ipAddress: null, // Sẽ được cập nhật từ request middleware
-            userAgent: null, // Sẽ được cập nhật từ request middleware
-          };
-
           if (user) {
-            // User đã tồn tại, cập nhật thông tin
-            user.email = profile.emails[0].value;
-            user.name = profile.displayName;
-            user.firstName = profile.name?.givenName || '';
-            user.lastName = profile.name?.familyName || '';
-            user.avatar = profile.photos[0]?.value || user.avatar;
-            
-            // Cập nhật Google Profile
-            user.googleProfile = {
-              displayName: profile.displayName,
-              photo: profile.photos[0]?.value || null,
-              locale: profile._json?.locale || 'en',
-              raw: profile._json,
-            };
-
-            // Cập nhật Google Tokens
-            user.googleTokens = {
-              accessToken: accessToken,
-              refreshToken: refreshToken || user.googleTokens?.refreshToken,
-              tokenExpiry: new Date(Date.now() + 3600 * 1000), // 1 giờ
-            };
-
-            // Cập nhật lịch sử đăng nhập
-            user.loginHistory.push(newLoginEntry);
-            user.lastLogin = new Date();
-            user.loginCount = (user.loginCount || 0) + 1;
-            user.isActive = true;
+            // User đã tồn tại - chỉ cập nhật thông tin cơ bản nếu có thay đổi
+            if (profile.emails && profile.emails[0]) {
+              user.email = profile.emails[0].value.toLowerCase();
+            }
+            if (profile.displayName) {
+              user.name = profile.displayName;
+            }
+            if (profile.photos && profile.photos[0]) {
+              user.avatar = profile.photos[0].value;
+            }
+            // Đảm bảo authProvider được set đúng (quan trọng cho validation)
+            if (!user.authProvider) {
+              user.authProvider = 'google';
+            }
             user.updatedAt = new Date();
 
+            // Save - password validation sẽ tự động skip vì authProvider = 'google'
+            // (xem User model: password required chỉ khi authProvider === 'username')
             await user.save();
+            console.log('✅ User đã tồn tại:', user.email);
             return done(null, user);
           }
 
-          // Tạo user mới
+          // Tạo user mới - MINIMAL DATA ONLY
           user = new User({
             googleId: profile.id,
-            email: profile.emails[0].value,
-            name: profile.displayName,
-            firstName: profile.name?.givenName || '',
-            lastName: profile.name?.familyName || '',
-            avatar: profile.photos[0]?.value || null,
-            
-            // Google Profile
-            googleProfile: {
-              displayName: profile.displayName,
-              photo: profile.photos[0]?.value || null,
-              locale: profile._json?.locale || 'en',
-              raw: profile._json,
-            },
-
-            // Google Tokens
-            googleTokens: {
-              accessToken: accessToken,
-              refreshToken: refreshToken,
-              tokenExpiry: new Date(Date.now() + 3600 * 1000), // 1 giờ
-            },
-
-            // Lịch sử đăng nhập
-            loginHistory: [newLoginEntry],
-            lastLogin: new Date(),
-            loginCount: 1,
-            isActive: true,
+            email: profile.emails?.[0]?.value?.toLowerCase() || null,
+            name: profile.displayName || 'Google User',
+            avatar: profile.photos?.[0]?.value || null,
+            role: 'Customer',
+            authProvider: 'google',
           });
 
           await user.save();
+          console.log('✅ Tạo user mới từ Google:', user.email);
           return done(null, user);
         } catch (err) {
+          console.error('❌ Lỗi Google OAuth:', err);
           return done(err, null);
         }
       }

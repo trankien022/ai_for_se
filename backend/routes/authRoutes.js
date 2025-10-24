@@ -5,27 +5,9 @@ const User = require('../models/User');
 
 const router = express.Router();
 
-// Middleware để ghi nhận IP và User Agent
-const captureLoginInfo = async (req, res, next) => {
-  try {
-    const ipAddress = req.ip || req.connection.remoteAddress;
-    const userAgent = req.get('user-agent');
-    
-    // Lưu vào session để sử dụng trong callback
-    req.session.loginInfo = {
-      ipAddress,
-      userAgent,
-    };
-    next();
-  } catch (err) {
-    next(err);
-  }
-};
-
-// Khởi động OAuth flow
+// Khởi động OAuth flow với Google
 router.get(
   '/google',
-  captureLoginInfo,
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
@@ -35,35 +17,14 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/login' }),
   async (req, res) => {
     try {
-      // Cập nhật IP và User Agent vào lần đăng nhập cuối cùng
-      if (req.user && req.session.loginInfo) {
-        const user = req.user;
-        if (user.loginHistory && user.loginHistory.length > 0) {
-          const lastLogin = user.loginHistory[user.loginHistory.length - 1];
-          lastLogin.ipAddress = req.session.loginInfo.ipAddress;
-          lastLogin.userAgent = req.session.loginInfo.userAgent;
-          await user.save();
-        }
-      }
-
       // Tạo JWT token
       const token = generateToken(req.user);
 
-      // Chuẩn bị dữ liệu user để gửi
-      const userData = {
-        id: req.user._id,
-        email: req.user.email,
-        name: req.user.name,
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        avatar: req.user.avatar,
-        loginCount: req.user.loginCount,
-        lastLogin: req.user.lastLogin,
-      };
-
-      // Redirect về frontend với token
-      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-      res.redirect(`${frontendUrl}?token=${token}&user=${JSON.stringify(userData)}`);
+      // Redirect về frontend CHỈ với token
+      // Frontend sẽ gọi /api/auth/me để lấy thông tin user
+      // KHÔNG gửi user data qua URL để tránh lộ thông tin trong browser history/logs
+      const frontendUrl = process.env.FRONTEND_URL || 'http://127.0.0.1:5500/frontend/components/home/home.html';
+      res.redirect(`${frontendUrl}?token=${token}`);
     } catch (err) {
       console.error('Error in Google callback:', err);
       res.status(500).json({ message: 'Lỗi xác thực', error: err.message });
@@ -79,18 +40,18 @@ router.get('/me', authenticateToken, async (req, res) => {
       return res.status(404).json({ message: 'User không tìm thấy' });
     }
     
-    // Trả về thông tin user (không bao gồm sensitive data)
+    // Trả về thông tin user (MINIMAL - không bao gồm sensitive data)
+    // Sử dụng default values cho trường hợp users cũ chưa migrate
     const userData = {
       id: user._id,
       email: user.email,
       name: user.name,
-      firstName: user.firstName,
-      lastName: user.lastName,
       avatar: user.avatar,
-      isActive: user.isActive,
-      loginCount: user.loginCount,
-      lastLogin: user.lastLogin,
+      role: user.role || 'Customer',
+      customerId: user.customerId,
+      authProvider: user.authProvider || 'google',
       createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
     };
     
     res.json(userData);
@@ -109,23 +70,14 @@ router.post('/logout', (req, res) => {
   });
 });
 
-// Lấy lịch sử đăng nhập của user
+// Lấy lịch sử đăng nhập của user (Removed - không còn track loginHistory trong User model)
 router.get('/login-history', authenticateToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
-    if (!user) {
-      return res.status(404).json({ message: 'User không tìm thấy' });
-    }
-
-    // Sắp xếp theo thời gian gần nhất trước
-    const loginHistory = user.loginHistory
-      .sort((a, b) => new Date(b.loginAt) - new Date(a.loginAt))
-      .slice(0, 20); // Lấy 20 lần đăng nhập gần nhất
-
+    // loginHistory đã bị loại bỏ khỏi User model để tối ưu
+    // Trả về empty history
     res.json({
-      loginCount: user.loginCount,
-      lastLogin: user.lastLogin,
-      loginHistory,
+      message: 'Login history tracking disabled for optimization',
+      loginHistory: [],
     });
   } catch (err) {
     res.status(500).json({ message: 'Lỗi server', error: err.message });

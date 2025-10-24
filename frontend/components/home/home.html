@@ -13,7 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Tektur:wght@400..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="shortcut icon" href="/asset/images/logo_gf_black.svg" />
+    <link rel="shortcut icon" href="/frontend/assets/images/logo_gf_black.svg" />
     <link rel="stylesheet" href="../../assets/fonts.css" />
     <link rel="stylesheet" href="home.css" />
     <link rel="stylesheet" href="../login/login.css" />
@@ -193,12 +193,6 @@
         class="flex items-center justify-center w-full h-full"
       ></div>
     </div>
-    <script src="home.js"></script>
-    <iframe
-      class="footer-iframe"
-      src="../footer/footer.html"
-      style="border: none; width: 100%; z-index: 10; position: relative"
-    ></iframe>
     <script>
       window.addEventListener("message", function (event) {
         if (event.data && event.data.type === "toggleMegaDropdown") {
@@ -242,5 +236,12 @@
         }
       });
     </script>
+    <iframe
+      class="footer-iframe"
+      src="../footer/footer.html"
+      style="border: none; width: 100%; z-index: 10; position: relative"
+    ></iframe>
+    <script src="config.js"></script>
+    <script src="home.js"></script>
   </body>
 </html>

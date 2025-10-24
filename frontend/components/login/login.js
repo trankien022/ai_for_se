@@ -27,3 +27,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Allow header to call this function after loading modal content
 window.initEyeToggle = initEyeToggle;
+
+// Initialize Google Login Button
+document.addEventListener('DOMContentLoaded', function () {
+    const googleBtn = document.querySelector('.btn-google');
+    if (googleBtn) {
+        googleBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            // Redirect to backend OAuth endpoint
+            const backendUrl = window.API_CONFIG?.BACKEND_URL || 'http://localhost:3000';
+            window.location.href = backendUrl + '/api/auth/google';
+        });
+    }
+});
+
+// Allow this function to be called from modal content as well
+window.initGoogleLogin = function() {
+    const googleBtn = document.querySelector('.btn-google');
+    if (googleBtn) {
+        googleBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const backendUrl = window.API_CONFIG?.BACKEND_URL || 'http://localhost:3000';
+            window.location.href = backendUrl + '/api/auth/google';
+        });
+    }
+};
+
+// Xử lý form đăng nhập thông thường
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.querySelector('form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Lưu timestamp khi đăng nhập thành công
+            // (Giả sử đăng nhập thành công, bạn cần điều chỉnh theo API thực tế)
+            handleLoginSuccess();
+        });
+    }
+});
+
+// Hàm xử lý khi đăng nhập thành công
+function handleLoginSuccess() {
+    // Lưu thời gian đăng nhập
+    localStorage.setItem('loginTimestamp', Date.now().toString());
+    
+    // Khởi động bộ đếm thời gian (nếu có trong parent window)
+    if (window.parent && window.parent.startSessionTimer) {
+        window.parent.startSessionTimer();
+    }
+}
+
+// Export function để có thể gọi từ nơi khác
+window.handleLoginSuccess = handleLoginSuccess;

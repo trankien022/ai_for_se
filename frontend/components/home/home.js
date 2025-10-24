@@ -336,6 +336,42 @@ const motorcyclesData = [
 
 // Initialize both carousels when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
+  // Handle OAuth callback
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  const user = params.get('user');
+
+  if (token) {
+    // SECURITY: Không lấy user data từ URL params nữa để tránh XSS
+    // Validate token format trước khi lưu
+    if (!token.match(/^[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_]+$/)) {
+      console.error('❌ Invalid token format');
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return;
+    }
+    
+    console.log('🔑 Token received from OAuth callback');
+    
+    // Lưu token vào localStorage
+    localStorage.setItem('authToken', token);
+    
+    // Xóa query params khỏi URL ngay để không lộ token
+    window.history.replaceState({}, document.title, window.location.pathname);
+    
+    // Fetch user data từ backend API (secure)
+    fetchAndStoreUserData(token).then(() => {
+      // Khởi động bộ đếm thời gian tự động đăng xuất
+      startSessionTimer();
+      console.log('✅ Login session initialized successfully');
+    }).catch(error => {
+      console.error('❌ Lỗi fetch user data:', error);
+      localStorage.removeItem('authToken');
+    });
+  } else {
+    // Không có token trong URL, kiểm tra localStorage để khôi phục phiên
+    restoreSession();
+  }
+
   generateSlides(carsData, "cars-carousel", "cars");
   generateSlides(motorcyclesData, "motorcycles-carousel", "motorcycles");
   new Carousel("cars", carouselArrangements);
@@ -344,6 +380,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Message handlers
 window.addEventListener("message", function (event) {
+  console.log("Parent received message:", event.data);
+  
   if (event.data && event.data.type === "headerHeight") {
     var homeContent = document.querySelector(".font-svn-poppins");
     if (homeContent) {
@@ -351,7 +389,14 @@ window.addEventListener("message", function (event) {
       homeContent.style.visibility = "visible";
         homeContent.style.opacity = 1;
     }
+  } else if (event.data && event.data.type === "closeModal") {
+    // Đóng modal
+    var popup = document.getElementById("popup-login");
+    if (popup) {
+      popup.classList.add("hidden");
+    }
   } else if (event.data && event.data.type === "openLoginModal") {
+    console.log("Opening login modal...");
     var popup = document.getElementById("popup-login");
     var content = document.getElementById("popup-login-content");
     if (popup && content) {
@@ -366,6 +411,7 @@ window.addEventListener("message", function (event) {
           if (loginBox) {
             content.appendChild(loginBox);
             initEyeToggle(loginBox);
+            initGoogleLogin();
           }
           setTimeout(() => {
             content.querySelectorAll("button").forEach((closeBtn) => {
@@ -381,6 +427,68 @@ window.addEventListener("message", function (event) {
             });
           }, 0);
         });
+    }
+  } else if (event.data && event.data.type === "openUserProfile") {
+    console.log("Opening user profile...");
+    var popup = document.getElementById("popup-login");
+    var content = document.getElementById("popup-login-content");
+    if (popup && content) {
+      popup.classList.remove("hidden");
+      fetch("./user-profile.html")
+        .then((res) => res.text())
+        .then((html) => {
+          console.log("Profile HTML loaded successfully");
+          content.innerHTML = html;
+          
+          // Execute scripts trong HTML đã load (theo thứ tự đúng)
+          const scripts = content.querySelectorAll('script');
+          const scriptsArray = Array.from(scripts);
+          
+          // Load external scripts trước (như config.js)
+          const externalScripts = scriptsArray.filter(s => s.src);
+          const inlineScripts = scriptsArray.filter(s => !s.src);
+          
+          console.log(`Found ${externalScripts.length} external scripts and ${inlineScripts.length} inline scripts`);
+          
+          // Load external scripts đầu tiên
+          let loadedCount = 0;
+          externalScripts.forEach(script => {
+            const newScript = document.createElement('script');
+            newScript.src = script.src;
+            newScript.onload = () => {
+              loadedCount++;
+              console.log(`✅ External script loaded: ${script.src}`);
+              
+              // Khi tất cả external scripts đã load, mới execute inline scripts
+              if (loadedCount === externalScripts.length) {
+                console.log('All external scripts loaded, executing inline scripts...');
+                inlineScripts.forEach(script => {
+                  const newInlineScript = document.createElement('script');
+                  newInlineScript.textContent = script.textContent;
+                  content.appendChild(newInlineScript);
+                });
+                console.log("✅ All scripts executed successfully");
+              }
+            };
+            document.head.appendChild(newScript);
+          });
+          
+          // Nếu không có external scripts, execute inline scripts ngay
+          if (externalScripts.length === 0) {
+            console.log('No external scripts, executing inline scripts...');
+            inlineScripts.forEach(script => {
+              const newInlineScript = document.createElement('script');
+              newInlineScript.textContent = script.textContent;
+              content.appendChild(newInlineScript);
+            });
+            console.log("✅ All scripts executed successfully");
+          }
+          
+          console.log("Profile inserted into modal");
+        })
+        .catch(err => console.error("Error loading profile:", err));
+    } else {
+      console.error("Popup or content not found!");
     }
   } else if (event.data && event.data.type === "footerHeight") {
     var footerIframe = document.querySelector(".footer-iframe");
@@ -545,3 +653,328 @@ function initEyeToggle(context = document) {
     };
   });
 }
+
+// Initialize Google Login Button
+function initGoogleLogin() {
+  const googleBtn = document.querySelector('.btn-google');
+  if (googleBtn) {
+    googleBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      
+      // OAuth flow yêu cầu full page redirect (không thể dùng popup do CORS restrictions)
+      // Google sẽ redirect về callbackURL sau khi user authorize
+      // Modal sẽ tự động đóng khi page reload với token
+      const backendUrl = window.API_CONFIG?.BACKEND_URL || 'http://localhost:3000';
+      
+      // Lưu state để restore modal nếu OAuth fails (optional)
+      sessionStorage.setItem('oauthInProgress', 'true');
+      
+      // Full page redirect là cách an toàn và được Google khuyến nghị
+      window.location.href = backendUrl + '/api/auth/google';
+    });
+  }
+}
+
+// Fetch user data từ backend và lưu vào localStorage
+async function fetchAndStoreUserData(token) {
+  const backendUrl = window.API_CONFIG?.BACKEND_URL || 'http://localhost:3000';
+  
+  try {
+    const response = await fetch(`${backendUrl}/api/auth/me`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const userData = await response.json();
+    console.log('✅ User data fetched from API:', userData);
+    
+    // Lưu vào localStorage
+    localStorage.setItem('userData', JSON.stringify(userData));
+    
+    // Cập nhật header iframe
+    const headerIframe = document.querySelector('.header-iframe');
+    if (headerIframe) {
+      const sendMessageToIframe = () => {
+        try {
+          headerIframe.contentWindow.postMessage({
+            type: 'loginSuccess',
+            userName: userData.name || userData.email
+          }, '*');
+          console.log('✅ Message sent to header iframe');
+        } catch (error) {
+          console.error('❌ Error sending message to iframe:', error);
+        }
+      };
+      
+      // Nếu iframe đã load, gửi ngay
+      if (headerIframe.contentDocument && headerIframe.contentDocument.readyState === 'complete') {
+        sendMessageToIframe();
+      } else {
+        // Nếu chưa load, đợi load event
+        headerIframe.addEventListener('load', sendMessageToIframe, { once: true });
+        // Fallback: timeout sau 1 giây nếu load event không fire
+        setTimeout(sendMessageToIframe, 1000);
+      }
+    }
+    
+    return userData;
+  } catch (error) {
+    console.error('❌ Error fetching user data:', error);
+    throw error;
+  }
+}
+
+// ===== QUẢN LÝ PHIÊN ĐĂNG NHẬP =====
+// Decode JWT để lấy expiration time thực tế từ backend
+// Buffer 2 phút trước khi JWT thực sự hết hạn để tránh API calls với expired token
+const JWT_EXPIRATION_BUFFER = 2 * 60 * 1000; // 2 phút buffer
+let sessionCheckInterval = null;
+let logoutWarningShown = false;
+
+// Helper function để decode JWT và lấy expiration time
+function getTokenExpirationTime(token) {
+  try {
+    // JWT format: header.payload.signature
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    const payload = JSON.parse(jsonPayload);
+    // exp là Unix timestamp (seconds), convert sang milliseconds
+    return payload.exp ? payload.exp * 1000 : null;
+  } catch (error) {
+    console.error('Error decoding token:', error);
+    return null;
+  }
+}
+
+// Khôi phục phiên đăng nhập khi reload trang
+function restoreSession() {
+  const token = localStorage.getItem('authToken');
+  const userDataStr = localStorage.getItem('userData');
+  
+  if (!token) {
+    console.log('Không có phiên đăng nhập để khôi phục');
+    return;
+  }
+  
+  // Lấy expiration time từ JWT token
+  const expirationTime = getTokenExpirationTime(token);
+  if (!expirationTime) {
+    console.log('Không thể đọc expiration từ token, đăng xuất');
+    autoLogout('Token không hợp lệ.');
+    return;
+  }
+  
+  // Kiểm tra xem token có hết hạn chưa (với buffer)
+  const currentTime = Date.now();
+  const remainingTime = expirationTime - currentTime - JWT_EXPIRATION_BUFFER;
+  
+  if (remainingTime <= 0) {
+    // Token đã hết hạn hoặc sắp hết hạn, tự động đăng xuất
+    console.log('Token đã hết hạn, tự động đăng xuất');
+    autoLogout('Phiên đăng nhập đã hết hạn.');
+    return;
+  }
+  
+  console.log(`Khôi phục phiên đăng nhập, còn ${Math.floor(remainingTime / 1000 / 60)} phút`);
+  
+  // Khôi phục thông tin user và cập nhật header
+  if (userDataStr) {
+    try {
+      const userData = JSON.parse(userDataStr);
+      const headerIframe = document.querySelector('.header-iframe');
+      if (headerIframe) {
+        // Đợi header load xong rồi mới gửi message
+        setTimeout(() => {
+          headerIframe.contentWindow.postMessage({
+            type: 'loginSuccess',
+            userName: userData.name || userData.email
+          }, '*');
+          console.log('Đã khôi phục UI header với user:', userData.name || userData.email);
+        }, 500);
+      }
+    } catch (error) {
+      console.error('Lỗi parse userData:', error);
+    }
+  }
+  
+  // Khởi động lại bộ đếm thời gian
+  startSessionTimer();
+}
+
+// Kiểm tra thời gian hết hạn phiên đăng nhập
+function checkSessionExpiry() {
+  const token = localStorage.getItem('authToken');
+  
+  if (!token) {
+    // Không có phiên đăng nhập, dừng kiểm tra
+    if (sessionCheckInterval) {
+      clearInterval(sessionCheckInterval);
+      sessionCheckInterval = null;
+    }
+    return;
+  }
+  
+  // Lấy expiration time từ JWT token
+  const expirationTime = getTokenExpirationTime(token);
+  if (!expirationTime) {
+    console.warn('Không thể đọc expiration từ token');
+    autoLogout('Token không hợp lệ.');
+    return;
+  }
+  
+  const currentTime = Date.now();
+  const remainingTime = expirationTime - currentTime - JWT_EXPIRATION_BUFFER;
+  
+  console.log(`Phiên đăng nhập: ${Math.floor(remainingTime / 1000 / 60)} phút còn lại (JWT exp: ${new Date(expirationTime).toLocaleTimeString()})`);
+  
+  // Nếu hết thời gian (đã tính buffer), tự động đăng xuất
+  if (remainingTime <= 0) {
+    autoLogout('Phiên đăng nhập đã hết hạn.');
+    return;
+  }
+  
+  // Cảnh báo trước 5 phút (ngoài buffer 2 phút = tổng 7 phút trước khi JWT expire)
+  if (remainingTime <= 5 * 60 * 1000 && !logoutWarningShown) {
+    showLogoutWarning(Math.floor(remainingTime / 1000 / 60));
+    logoutWarningShown = true;
+  }
+}
+
+// Khởi động bộ đếm thời gian phiên
+function startSessionTimer() {
+  // Xóa interval cũ nếu có
+  if (sessionCheckInterval) {
+    clearInterval(sessionCheckInterval);
+  }
+  
+  // Đặt lại cờ cảnh báo
+  logoutWarningShown = false;
+  
+  // Kiểm tra ngay lập tức
+  checkSessionExpiry();
+  
+  // Kiểm tra mỗi 30 giây
+  sessionCheckInterval = setInterval(checkSessionExpiry, 30 * 1000);
+}
+
+// Tự động đăng xuất
+function autoLogout(message) {
+  console.log('Tự động đăng xuất:', message);
+  
+  // Xóa interval
+  if (sessionCheckInterval) {
+    clearInterval(sessionCheckInterval);
+    sessionCheckInterval = null;
+  }
+  
+  // Xóa dữ liệu đăng nhập
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('userData');
+  
+  // Set flag để các API calls biết là đang logout
+  sessionStorage.setItem('logoutInProgress', 'true');
+  
+  // Thông báo cho header
+  const headerIframe = document.querySelector('.header-iframe');
+  if (headerIframe) {
+    try {
+      headerIframe.contentWindow.postMessage({
+        type: 'logout'
+      }, '*');
+    } catch (error) {
+      console.error('Error notifying header iframe:', error);
+    }
+  }
+  
+  // Hiển thị thông báo non-blocking
+  showLogoutNotification(message);
+  
+  // Reload trang sau 2 giây với fallback handling
+  let reloadAttempted = false;
+  const reloadTimeout = setTimeout(() => {
+    reloadAttempted = true;
+    try {
+      // Force reload, bypass cache
+      window.location.reload(true);
+    } catch (error) {
+      console.error('Reload failed:', error);
+      // Fallback: redirect to home page
+      window.location.href = window.location.pathname;
+    }
+  }, 2000);
+  
+  // Fallback: nếu sau 5 giây vẫn không reload được, force redirect
+  setTimeout(() => {
+    if (!reloadAttempted) {
+      clearTimeout(reloadTimeout);
+      console.warn('Force redirecting due to reload timeout');
+      window.location.href = window.location.pathname;
+    }
+  }, 5000);
+}
+
+// Hiển thị notification non-blocking
+function showLogoutNotification(message) {
+  // Tạo notification element
+  const notification = document.createElement('div');
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    font-family: 'SVN-Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    max-width: 350px;
+    animation: slideInRight 0.3s ease-out;
+  `;
+  notification.textContent = '🔒 ' + message;
+  
+  // Thêm animation CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideInRight {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+  document.body.appendChild(notification);
+}
+
+// Hiển thị cảnh báo sắp hết phiên
+function showLogoutWarning(minutesLeft) {
+  console.log(`Cảnh báo: Phiên đăng nhập sẽ hết hạn sau ${minutesLeft} phút`);
+  
+  // Có thể thêm UI notification ở đây
+  // Hiện tại chỉ log ra console
+}
+
+// Lắng nghe message từ các thành phần khác để reset timer khi có tương tác
+window.addEventListener('message', function(event) {
+  if (event.data && event.data.type === 'userActivity') {
+    // Có thể extend phiên nếu muốn (tùy chọn)
+    // Hiện tại không extend, giữ nguyên 30 phút từ lúc đăng nhập
+  }
+});

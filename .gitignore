@@ -66,7 +66,38 @@ temp/
 # Test files
 *.test.js
 *.spec.js
+*.test.ts
+*.spec.ts
+*.test.jsx
+*.spec.jsx
+*.test.tsx
+*.spec.tsx
 test-*.js
+test-*.ts
 tests/
 __tests__/
 .test-results/
+
+# Test coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# Test configs
+jest.config.js
+jest.config.ts
+vitest.config.js
+vitest.config.ts
+cypress.config.js
+cypress.config.ts
+
+# E2E test directories
+cypress/
+e2e/
+playwright-report/
+test-results/
+
+# Test/debug files với sensitive data
+backend/generate-test-token.js
+*-test-token.js
+*-debug.js

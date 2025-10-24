@@ -1,75 +1,72 @@
 const mongoose = require('mongoose');
 
+// ===== UNIFIED USER SCHEMA (Minimal & Clean) =====
 const userSchema = new mongoose.Schema({
+  // === Authentication (Username OR Google) ===
+  username: {
+    type: String,
+    unique: true,
+    sparse: true,
+    trim: true,
+    index: true,
+  },
+  password: {
+    type: String,
+    // Chỉ required nếu là username login
+    required: function() {
+      return this.authProvider === 'username';
+    },
+  },
   googleId: {
     type: String,
     unique: true,
     sparse: true,
     index: true,
   },
+  
+  // === Core User Info ===
   email: {
     type: String,
     unique: true,
-    required: true,
+    sparse: true,
     index: true,
+    lowercase: true,
+    trim: true,
+    // Email required cho Google users, optional cho username users
+    required: function() {
+      return this.authProvider === 'google';
+    },
   },
   name: {
     type: String,
     required: true,
-  },
-  firstName: {
-    type: String,
-  },
-  lastName: {
-    type: String,
+    trim: true,
   },
   avatar: {
     type: String,
     default: null,
   },
-  // Google Profile Info
-  googleProfile: {
-    displayName: String,
-    photo: String,
-    locale: String,
-    raw: Object,
+  
+  // === Authorization ===
+  role: {
+    type: String,
+    enum: ['Admin', 'Staff', 'Customer'],
+    default: 'Customer',
   },
-  // Google Tokens
-  googleTokens: {
-    accessToken: String,
-    refreshToken: String,
-    tokenExpiry: Date,
+  customerId: {
+    type: String,
+    default: null,
   },
-  // Login Statistics
-  loginHistory: [
-    {
-      loginAt: {
-        type: Date,
-        default: Date.now,
-      },
-      loginMethod: {
-        type: String,
-        enum: ['google', 'email', 'phone'],
-      },
-      ipAddress: String,
-      userAgent: String,
-    },
-  ],
-  lastLogin: {
-    type: Date,
+  
+  // === Auth Provider ===
+  authProvider: {
+    type: String,
+    enum: ['username', 'google'],
+    required: true,
+    default: 'username',
   },
-  loginCount: {
-    type: Number,
-    default: 0,
-  },
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
-  isTwoFactorEnabled: {
-    type: Boolean,
-    default: false,
-  },
+  
+  // === Timestamps ===
   createdAt: {
     type: Date,
     default: Date.now,
@@ -78,11 +75,24 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+}, {
+  // Mongoose options
+  timestamps: true, // Tự động update createdAt và updatedAt
+  collection: 'users',
 });
 
-// Indexes để tìm kiếm nhanh
+// ===== INDEXES =====
+userSchema.index({ username: 1 });
 userSchema.index({ googleId: 1 });
 userSchema.index({ email: 1 });
-userSchema.index({ lastLogin: -1 });
+userSchema.index({ role: 1 });
+
+// ===== METHODS =====
+
+// Update timestamp khi save
+userSchema.pre('save', function(next) {
+  this.updatedAt = new Date();
+  next();
+});
 
 module.exports = mongoose.model('User', userSchema);

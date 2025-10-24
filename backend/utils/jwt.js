@@ -11,7 +11,7 @@ const generateToken = (user) => {
   };
 
   return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '7d',
+    expiresIn: '30m', // Token hết hạn sau 30 phút
   });
 };
 
