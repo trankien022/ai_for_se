@@ -1,84 +1,135 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const router = express.Router();
+const passport = require('passport');
+const { generateToken, authenticateToken } = require('../utils/jwt');
 const User = require('../models/User');
 
-// POST /api/auth/login
-router.post('/login', async (req, res) => {
+const router = express.Router();
+
+// Middleware để ghi nhận IP và User Agent
+const captureLoginInfo = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
-    // Allow login with email or username (for admin)
-    const user = await User.findOne({
-      $or: [{ email }, { username: email }]
-    });
-    if (!user) return res.status(400).json({ message: 'User not found' });
-
-    // For demo, compare plain password (in real app, hash)
-    if (user.password !== password) return res.status(400).json({ message: 'Invalid password' });
-
-    // Update login info
-    user.lastLogin = new Date();
-    user.loginCount += 1;
-    user.loginHistory.push({
-      loginAt: new Date(),
-      loginMethod: user.email === email ? 'email' : 'username',
-      ipAddress: req.ip,
-      userAgent: req.get('User-Agent')
-    });
-    await user.save();
-
-    res.json({
-      message: 'Login successful',
-      user: {
-        id: user._id,
-        name: user.name || user.username,
-        role: user.role,
-        avatar: user.avatar
-      }
-    });
+    const ipAddress = req.ip || req.connection.remoteAddress;
+    const userAgent = req.get('user-agent');
+    
+    // Lưu vào session để sử dụng trong callback
+    req.session.loginInfo = {
+      ipAddress,
+      userAgent,
+    };
+    next();
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    next(err);
+  }
+};
+
+// Khởi động OAuth flow
+router.get(
+  '/google',
+  captureLoginInfo,
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// Xử lý callback từ Google
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  async (req, res) => {
+    try {
+      // Cập nhật IP và User Agent vào lần đăng nhập cuối cùng
+      if (req.user && req.session.loginInfo) {
+        const user = req.user;
+        if (user.loginHistory && user.loginHistory.length > 0) {
+          const lastLogin = user.loginHistory[user.loginHistory.length - 1];
+          lastLogin.ipAddress = req.session.loginInfo.ipAddress;
+          lastLogin.userAgent = req.session.loginInfo.userAgent;
+          await user.save();
+        }
+      }
+
+      // Tạo JWT token
+      const token = generateToken(req.user);
+
+      // Chuẩn bị dữ liệu user để gửi
+      const userData = {
+        id: req.user._id,
+        email: req.user.email,
+        name: req.user.name,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        avatar: req.user.avatar,
+        loginCount: req.user.loginCount,
+        lastLogin: req.user.lastLogin,
+      };
+
+      // Redirect về frontend với token
+      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+      res.redirect(`${frontendUrl}?token=${token}&user=${JSON.stringify(userData)}`);
+    } catch (err) {
+      console.error('Error in Google callback:', err);
+      res.status(500).json({ message: 'Lỗi xác thực', error: err.message });
+    }
+  }
+);
+
+// Lấy thông tin user từ JWT token
+router.get('/me', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User không tìm thấy' });
+    }
+    
+    // Trả về thông tin user (không bao gồm sensitive data)
+    const userData = {
+      id: user._id,
+      email: user.email,
+      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      avatar: user.avatar,
+      isActive: user.isActive,
+      loginCount: user.loginCount,
+      lastLogin: user.lastLogin,
+      createdAt: user.createdAt,
+    };
+    
+    res.json(userData);
+  } catch (err) {
+    res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 });
 
-// POST /api/auth/register
-router.post('/register', async (req, res) => {
+// Logout
+router.post('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Lỗi logout' });
+    }
+    res.json({ message: 'Logout thành công' });
+  });
+});
+
+// Lấy lịch sử đăng nhập của user
+router.get('/login-history', authenticateToken, async (req, res) => {
   try {
-    const { username, email, password, name } = req.body;
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User không tìm thấy' });
+    }
 
-    // Check for duplicate username
-    const existingUsername = await User.findOne({ username });
-    if (existingUsername) return res.status(400).json({ message: 'Username already exists' });
+    // Sắp xếp theo thời gian gần nhất trước
+    const loginHistory = user.loginHistory
+      .sort((a, b) => new Date(b.loginAt) - new Date(a.loginAt))
+      .slice(0, 20); // Lấy 20 lần đăng nhập gần nhất
 
-    // Check for duplicate email
-    const existingEmail = await User.findOne({ email });
-    if (existingEmail) return res.status(400).json({ message: 'Email already exists' });
-
-    // Create new user
-    const newUser = new User({
-      _id: new mongoose.Types.ObjectId().toString(),
-      username,
-      email,
-      password, // In real app, hash the password
-      name,
-      role: 'user', // Default role
-      loginHistory: [],
-      loginCount: 0,
-      isActive: true
-    });
-
-    await newUser.save();
-
-    res.status(201).json({
-      message: 'Registration successful',
-      user: {
-        id: newUser._id,
-        name: newUser.name,
-        role: newUser.role
-      }
+    res.json({
+      loginCount: user.loginCount,
+      lastLogin: user.lastLogin,
+      loginHistory,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: 'Lỗi server', error: err.message });
   }
 });
 
