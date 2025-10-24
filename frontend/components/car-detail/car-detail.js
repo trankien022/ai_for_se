@@ -2,20 +2,32 @@
 function transformVehicleDetail(vehicle) {
     const imageMap = {
         'md01': ['../../assets/images/vf301.webp', '../../assets/images/vf302.webp', '../../assets/images/vf303.webp', '../../assets/images/vf304.webp', '../../assets/images/vf305.webp', '../../assets/images/vf306.webp', '../../assets/images/vf307.webp', '../../assets/images/vf308.webp'],
-        'md02': ['../../assets/images/vf6s001.webp'],
-        'md03': ['../../assets/images/vf6plus001.webp'],
-        'md04': ['../../assets/images/vf7s001.webp'],
-        'md05': ['../../assets/images/vf7plus001.webp'],
-        'md06': ['../../assets/images/vf8eco01.webp'],
-        'md07': ['../../assets/images/vf8plus01.webp'],
-        'md08': ['../../assets/images/vf9-eco-09.webp'],
-        'md09': ['../../assets/images/vf9-plus-01.webp'],
-        'ms01': ['../../assets/images/feliz001.webp'],
+        'md02': ['../../assets/images/vf6s001.webp', '../../assets/images/vf6s002.webp', '../../assets/images/vf6s003.webp', '../../assets/images/vf6s004.webp', '../../assets/images/vf6s005.webp', '../../assets/images/vf6s006.webp', '../../assets/images/vf6s007.webp', '../../assets/images/vf6s008.webp', '../../assets/images/vf6s009.webp', '../../assets/images/vf6s010.webp', '../../assets/images/vf6s011.webp', '../../assets/images/vf6s012.webp', '../../assets/images/vf6s013.webp', '../../assets/images/vf6s014.webp', '../../assets/images/vf6s015.webp', '../../assets/images/vf6s016.webp'],
+        'md03': ['../../assets/images/vf6plus001.webp', '../../assets/images/vf6plus002.webp', '../../assets/images/vf6plus003.webp', '../../assets/images/vf6plus004.webp', '../../assets/images/vf6plus005.webp', '../../assets/images/vf6plus006.webp', '../../assets/images/vf6plus007.webp', '../../assets/images/vf6plus008.webp', '../../assets/images/vf6plus009.webp'],
+        'md04': ['../../assets/images/vf7s001.webp', '../../assets/images/vf7s002.webp', '../../assets/images/vf7s003.webp', '../../assets/images/vf7s004.webp', '../../assets/images/vf7s005.webp', '../../assets/images/vf7s006.webp', '../../assets/images/vf7s007.webp'],
+        'md05': ['../../assets/images/vf7plus001.webp', '../../assets/images/vf7plus002.webp', '../../assets/images/vf7plus003.webp', '../../assets/images/vf7plus004.webp', '../../assets/images/vf7plus005.webp', '../../assets/images/vf7plus006.webp', '../../assets/images/vf7plus007.webp', '../../assets/images/vf7plus007.webp'],
+        'md06': ['../../assets/images/vf8eco01.webp', '../../assets/images/vf8eco02.webp', '../../assets/images/vf8eco03.webp', '../../assets/images/vf8eco04.webp', '../../assets/images/vf8eco05.webp', '../../assets/images/vf8eco06.webp', '../../assets/images/vf8eco07.webp', '../../assets/images/vf8eco08.webp'],
+        'md07': ['../../assets/images/vf8plus01.webp', '../../assets/images/vf8plus02.webp', '../../assets/images/vf8plus03.webp', '../../assets/images/vf8plus04.webp', '../../assets/images/vf8plus05.webp', '../../assets/images/vf8plus06.webp', '../../assets/images/vf8plus07.webp', '../../assets/images/vf8plus08.webp'],
+        'md08': ['../../assets/images/vf9-eco-09.webp', '../../assets/images/vf9eco02.webp', '../../assets/images/vf9eco03.webp', '../../assets/images/vf9eco04.webp', '../../assets/images/vf9eco05.webp', '../../assets/images/vf9eco06.webp', '../../assets/images/vf9eco07.webp', '../../assets/images/vf9eco08.webp'],
+        'md09': ['../../assets/images/vf9-plus-10.webp', '../../assets/images/vf9plus02.webp', '../../assets/images/vf9plus03.webp', '../../assets/images/vf9plus04.webp', '../../assets/images/vf9plus05.webp', '../../assets/images/vf9plus06.webp', '../../assets/images/vf9plus07.webp', '../../assets/images/vf9plus08.webp', '../../assets/images/vf9plus09.webp'],
+        'ms01': ['../../assets/images/vffeliz2025.jpg', '../../assets/images/vffeliz01.webp', '../../assets/images/vffeliz02.webp',],
         'ms02': ['../../assets/images/vento-s001.webp'],
         'ms03': ['../../assets/images/theon-s001.webp'],
         'ms04': ['../../assets/images/vero-x001.webp'],
         'ms05': ['../../assets/images/vento-neo001.webp']
     };
+
+    const mainSpecs = [
+        { icon: '../../assets/images/no_of_seat.svg', text: `${vehicle.seats} chỗ` },
+        { icon: '../../assets/images/range_per_charge.svg', text: vehicle.range },
+        ...(vehicle.vehicleType !== 'Xe Máy Điện' ? [
+            { icon: '../../assets/images/transmission.svg', text: 'Số tự động' },
+            { icon: '../../assets/images/airbag.svg', text: vehicle.features.find(f => f.includes('túi khí')) || '1 túi khí' },
+            { icon: '../../assets/images/max_power.svg', text: vehicle.features.find(f => f.includes('HP')) || '43 HP' }
+        ] : []),
+        { icon: '../../assets/images/car_model.svg', text: vehicle.vehicleType },
+        { icon: '../../assets/images/trunk_capacity.svg', text: vehicle.features.find(f => f.includes('Dung tích cốp')) || '285L' }
+    ];
 
     return {
         title: vehicle.model,
@@ -24,18 +36,8 @@ function transformVehicleDetail(vehicle) {
         images: imageMap[vehicle._id] || ['../../assets/images/default.webp'],
         depositPerDay: vehicle.depositPerDay,
         depositPerMonth: vehicle.depositPerMonth,
-        mainSpecs: [
-            { icon: '../../assets/images/no_of_seat.svg', text: `${vehicle.seats} chỗ` },
-            { icon: '../../assets/images/range_per_charge.svg', text: vehicle.range },
-            ...(vehicle.vehicleType !== 'Xe Máy Điện' ? [
-                { icon: '../../assets/images/transmission.svg', text: 'Số tự động' },
-                { icon: '../../assets/images/airbag.svg', text: vehicle.features.find(f => f.includes('túi khí')) || '1 túi khí' },
-                { icon: '../../assets/images/max_power.svg', text: vehicle.features.find(f => f.includes('HP')) || '43 HP' }
-            ] : []),
-            { icon: '../../assets/images/car_model.svg', text: vehicle.vehicleType },
-            { icon: '../../assets/images/trunk_capacity.svg', text: vehicle.features.find(f => f.includes('Dung tích cốp')) || '285L' }
-        ],
-        otherSpecs: vehicle.features.slice(0, 2).map(f => ({ icon: '../../assets/images/screen_entertainment.svg', text: f })) // Example
+        mainSpecs: mainSpecs,
+        otherSpecs: vehicle.features.filter(f => !mainSpecs.some(spec => spec.text.includes(f))).map(f => ({ icon: '../../assets/images/screen_entertainment.svg', text: f }))
     };
 }
 

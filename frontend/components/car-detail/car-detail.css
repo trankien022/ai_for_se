@@ -225,7 +225,7 @@ body {
     width: 554px;
     min-width: 554px;
     max-width: 554px;
-    /* height: 445px; */ /* <-- ĐÃ XÓA */
+    height: 445px;
     flex: none;
     border-radius: 8px;
     padding: 0 24px 24px 0;
@@ -440,7 +440,7 @@ body {
     margin: 0px 0px 0px 140px;
     padding: 0px 12px;
     width: 827px;
-    /* height: 543px; */ /* <-- ĐÃ XÓA */
+    height: 543px;
     font-family: 'Mulish';
 }
 

@@ -32,13 +32,9 @@ class RentalForm {
 
     initializeDates() {
         // Set default pickup date to today
-        this.selectedStartDate = new Date(this.currentDate);
-        this.selectedStartDate.setHours(0, 0, 0, 0); // Chuẩn hóa về đầu ngày
-        
+        this.selectedStartDate = new Date(Date.UTC(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate()));
         // Set default return date to tomorrow
-        this.selectedEndDate = new Date(this.currentDate);
-        this.selectedEndDate.setDate(this.selectedEndDate.getDate() + 1);
-        this.selectedEndDate.setHours(0, 0, 0, 0); // Chuẩn hóa về đầu ngày
+        this.selectedEndDate = new Date(Date.UTC(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate() + 1));
         
         // Update display spans
         document.getElementById('pickup-date').textContent = this.formatDate(this.selectedStartDate);
@@ -267,17 +263,15 @@ class RentalForm {
         let returnDate = new Date(this.selectedStartDate);
         
         // Add months correctly
-        returnDate.setMonth(returnDate.getMonth() + duration);
+        returnDate.setUTCMonth(returnDate.getUTCMonth() + duration);
         // Ensure day doesn't overflow (e.g., Jan 31 + 1 month -> Feb 28/29)
         // Check if the day changed after setting the month
-        if (returnDate.getDate() < this.selectedStartDate.getDate()) {
+        if (returnDate.getUTCDate() < this.selectedStartDate.getUTCDate()) {
             // If it did, it means the target month has fewer days.
             // Go back to the last day of the *previous* month.
-             returnDate.setDate(0);
+             returnDate.setUTCDate(0);
         }
         
-        returnDate.setHours(0,0,0,0); // Chuẩn hóa
-
         this.selectedEndDate = returnDate;
         document.getElementById('return-date').textContent = this.formatDate(returnDate);
         renderCalendars(); // Cập nhật lịch
@@ -286,9 +280,9 @@ class RentalForm {
     formatDate(date) {
         if (!date || isNaN(date.getTime())) return "Invalid Date"; // Check for invalid date
         try {
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
+            const day = String(date.getUTCDate()).padStart(2, '0');
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+            const year = date.getUTCFullYear();
             return `${day}/${month}/${year}`;
         } catch (e) {
             console.error("Error formatting date:", date, e);
@@ -398,8 +392,7 @@ function renderCalendar(year, month, tbodyId, captionId) {
     caption.textContent = `${MONTHS[month]} ${year}`;
     tbody.innerHTML = ""; // Clear previous content
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const today = new Date(Date.UTC(currentCalendarDate.getFullYear(), currentCalendarDate.getMonth(), currentCalendarDate.getDate()));
 
     // Lấy ngày bắt đầu và kết thúc từ instance, đảm bảo chúng là Date hợp lệ
     const startDate = (rentalFormInstance && rentalFormInstance.selectedStartDate instanceof Date)
@@ -423,8 +416,7 @@ function renderCalendar(year, month, tbodyId, captionId) {
             if ((row === 0 && col < firstDay) || day > daysInMonth) {
                 td.innerHTML = '<div role="gridcell" class="size-10"></div>'; // Empty cell, ensure size
             } else {
-                const currentDate = new Date(year, month, day);
-                currentDate.setHours(0, 0, 0, 0);
+                const currentDate = new Date(Date.UTC(year, month, day));
                 const isPast = currentDate < today;
 
                 const btn = document.createElement("button");
@@ -432,8 +424,7 @@ function renderCalendar(year, month, tbodyId, captionId) {
                 btn.type = "button";
                 btn.setAttribute("role", "gridcell");
                  // Store date info for click handler
-                 const localDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                 btn.dataset.date = localDateStr; // YYYY-MM-DD local
+                 btn.dataset.date = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD
                 btn.tabIndex = -1;
                 let btnClasses = [
                     "rdp-button_reset", "rdp-button",
@@ -636,11 +627,10 @@ function handleDayClick(e) {
             const day = parseInt(parts[2], 10);
             
             if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
-                let selectedDate = new Date(year, month, day);
-                selectedDate.setHours(0,0,0,0); // Standardize
+                let selectedDate = new Date(Date.UTC(year, month, day));
                 
                 // Check if date is valid after creation (e.g., Feb 30 invalid)
-                 if (selectedDate.getFullYear() === year && selectedDate.getMonth() === month && selectedDate.getDate() === day) {
+                 if (selectedDate.getUTCFullYear() === year && selectedDate.getUTCMonth() === month && selectedDate.getUTCDate() === day) {
                       handleDateSelection(selectedDate);
                  } else {
                       console.error("Invalid date created from button data:", dateString);
@@ -658,8 +648,7 @@ function handleDayClick(e) {
 function getNextDay(date) {
     if(!date || isNaN(date.getTime())) return null; // Check if date is valid
     let next = new Date(date);
-    next.setDate(date.getDate() + 1);
-    next.setHours(0,0,0,0);
+    next.setUTCDate(date.getUTCDate() + 1);
     return next;
 }
 
