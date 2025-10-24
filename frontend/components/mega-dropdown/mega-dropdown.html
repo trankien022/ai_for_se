@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mega Dropdown Component</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="mega-dropdown.css" />
+    <script>
+      const services = [
+        {
+          href: "../rental/car-rental.html",
+          img: "https://vinfastdongthap.com/wp-content/uploads/2024/05/VF7-13.jpg",
+          title: "Thuê ô tô điện",
+        },
+        {
+          href: "../rental/motorbike-rental.html",
+          img: "https://vin3sthaibinh.com/wp-content/uploads/2022/08/theons2-1652343396816.webp",
+          title: "Thuê xe máy điện",
+        },
+      ];
+
+      function generateServices() {
+        const container = document.querySelector(
+          ".flex.justify-center.gap-\\[38px\\]"
+        );
+        container.innerHTML = services
+          .map(
+            (service) => `
+          <a class="cursor-pointer no-underline text-black" href="${service.href}" target="_top">
+            <div class="rounded-[13px] border border-solid border-[#3C3C432E] h-[200px] w-[240px] flex flex-col hover:scale-105 transition-transform duration-300 bg-white">
+              <div class="h-[150px] relative">
+                <img alt="" loading="lazy" width="1000" height="1000" decoding="async" data-nimg="1" class="object-cover rounded-t-[13px] w-full h-full" src="${service.img}" style="color: transparent">
+              </div>
+              <p class="text-[16px] font-medium text-center mt-3">${service.title}</p>
+            </div>
+          </a>
+        `
+          )
+          .join("");
+      }
+
+      document.addEventListener("DOMContentLoaded", generateServices);
+    </script>
+    <script>
+      function sendDropdownHeight() {
+        const dropdown = document.querySelector('.w-screen.h-fit');
+        if (dropdown && window.parent) {
+          window.parent.postMessage({
+            type: "dropdownHeight",
+            height: dropdown.offsetHeight
+          }, "*");
+        }
+      }
+      window.addEventListener("message", function (event) {
+        if (event.data && event.data.type === "requestHeight") {
+          sendDropdownHeight();
+        }
+        if (event.data && event.data.type === "showDropdown") {
+          const dropdown = document.querySelector('.w-screen.h-fit');
+          if (dropdown) {
+            dropdown.classList.remove('dropdown-hidden');
+            dropdown.classList.add('dropdown-visible');
+            requestAnimationFrame(() => {
+              sendDropdownHeight();
+            });
+          }
+        }
+        if (event.data && event.data.type === "hideDropdown") {
+          const dropdown = document.querySelector('.w-screen.h-fit');
+          if (dropdown) {
+            dropdown.classList.remove('dropdown-visible');
+            dropdown.classList.add('dropdown-hidden');
+          }
+        }
+      });
+      window.addEventListener("load", sendDropdownHeight);
+      window.addEventListener("resize", sendDropdownHeight);
+    </script>
+  </head>
+  <body>
+    <div
+      class="w-screen h-fit py-8 bg-black/70 backdrop-blur-md dropdown-hidden transition-all duration-300 ease-in-out flex flex-col justify-center"
+    >
+      <div class="max-w-[1512px] mx-auto px-[20px] xl:px-[200px]">
+        <div class="2xl:px-[50px]">
+          <div class="flex justify-center gap-[38px]">
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

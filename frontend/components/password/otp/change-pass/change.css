@@ -1,0 +1,55 @@
+.bg-opacity-50 {
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: 'Mulish';
+}
+
+.logo img {
+    width: 122px;
+    height: 80px;
+}
+
+.text-3xl {
+    margin: 0px 0px 8px;
+}
+
+.btn-eye {
+    width: 42px;
+    height: 36px;
+}
+
+.change-form {
+    padding: 60px 0px;
+}
+
+.text-gray-700 {
+    color: #111827;
+}
+
+.text-input {
+    border-color: #dee2e6;
+    box-shadow: #00000013 0px 2px 4px 0px;
+    display: flex;
+}
+
+.d-grid {
+    display: grid;
+    grid-template-columns: 320px;
+    grid-template-rows: 41.6px;
+}
+
+.btn-submit {
+    background-color: #00d287;
+    border-color: #00d287;
+    border-style: solid;
+    border-width: 0.8px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 24px;
+    padding: 8px 16px;
+}
+
+.btn-submit:hover {
+    background-color: #19d693;
+}

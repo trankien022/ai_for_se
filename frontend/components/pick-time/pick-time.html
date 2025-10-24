@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="pick-time.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex items-center justify-center" id="pick-time-wrapper">
+    
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md" id="rental-form" onclick="event.stopPropagation()">
+        <div class="flex justify-center mb-[16px] mt-[4px] pt-4">
+            <button class="tab-btn px-4 py-2 rounded-t-lg text-md font-bold" data-tab="day">Thuê ngày</button>
+            <button class="tab-btn px-4 py-2 rounded-t-lg text-md font-bold ml-2" data-tab="month">Thuê tháng</button>
+        </div>
+
+        <div class="tab-content">
+            <div class="md:px-6 py-4 rounded-2xl mx-auto pt-8 px-3 bg-transparent w-full">
+                <form class="flex flex-col space-y-4 h-full" id="rental-booking-form">
+                    
+                    <div class="space-y-2 duration-input hidden">
+                        <div class="text-xs text-heading-secondary font-bold text-[#374151] leading-[18px] duration-label">Số tháng</div>
+                        <input class="flex w-full border border-input px-3 py-1 text-sm h-11 bg-white rounded-none shadow-none"
+                            min="1" max="12" placeholder="Nhập số tháng" type="number" value="1" name="duration" id="duration-input">
+                    </div>
+
+                    <div class="relative">
+                        <div class="text-xs text-heading-secondary font-bold text-[#374151] leading-[18px]">Ngày nhận xe</div>
+                        <div class="flex space-x-1 mt-2">
+                            <div class="space-y-2 flex-1 xl:flex-auto">
+                                <div class="date-picker flex items-center justify-between min-w-[140px] h-11 border-[1px] border-solid border-border-primary px-3 py-2.5 text-base bg-white cursor-pointer hover:border-brand-primary"
+                                    id="pickup-date-picker" data-picker="pickup-date">
+                                    <span id="pickup-date">07/08/2025</span>
+                                    <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6.08268 1.66667C6.08268 1.25246 5.7469 0.916672 5.33268 0.916672C4.91847 0.916672 4.58268 1.25246 4.58268 1.66667H6.08268ZM4.58268 5.00001C4.58268 5.41422 4.91847 5.75001 5.33268 5.75001C5.7469 5.75001 6.08268 5.41422 6.08268 5.00001H4.58268ZM12.7493 1.66667C12.7493 1.25246 12.4136 0.916672 11.9993 0.916672C11.5851 0.916672 11.2493 1.25246 11.2493 1.66667H12.7493ZM11.2493 5.00001C11.2493 5.41422 11.5851 5.75001 11.9993 5.75001C12.4136 5.75001 12.7493 5.41422 12.7493 5.00001H11.2493ZM3.66602 4.08334H13.666V2.58334H3.66602V4.08334ZM15.416 5.83334V15.8333H16.916V5.83334H15.416ZM13.666 17.5833H3.66602V19.0833H13.666V17.5833ZM1.91602 15.8333V5.83334H0.416016V15.8333H1.91602ZM3.66602 17.5833C2.69952 17.5833 1.91602 16.7998 1.91602 15.8333H0.416016C0.416016 17.6283 1.87109 19.0833 3.66602 19.0833V17.5833ZM15.416 15.8333C15.416 16.7998 14.6325 17.5833 13.666 17.5833V19.0833C15.4609 19.0833 16.916 17.6283 16.916 15.8333H15.416ZM13.666 4.08334C14.6325 4.08334 15.416 4.86684 15.416 5.83334H16.916C16.916 4.03841 15.4609 2.58334 13.666 2.58334V4.08334ZM3.66602 2.58334C1.87109 2.58334 0.416016 4.03841 0.416016 5.83334H1.91602C1.91602 4.86684 2.69952 4.08334 3.66602 4.08334V2.58334ZM1.16602 9.08334H16.166V7.58334H1.16602V9.08334ZM4.58268 1.66667V5.00001H6.08268V1.66667H4.58268ZM11.2493 1.66667V5.00001H12.7493V1.66667H11.2493Z"
+                                            fill="#4B5563"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="space-y-2 flex-1 xl:flex-auto">
+                                <div class="time-picker flex items-center justify-between min-w-[140px] h-11 border-[1px] border-solid border-border-primary px-3 py-2.5 text-base bg-white cursor-pointer hover:border-brand-primary"
+                                    id="pickup-time-picker" data-picker="pickup-time">
+                                    <span id="pickup-time">16:10</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        <g clip-path="url(#clip0_6406_8735)">
+                                            <path d="M9.99996 5.83332V9.99999L8.33329 12.5M18.3333 9.99999C18.3333 14.6024 14.6023 18.3333 9.99996 18.3333C5.39759 18.3333 1.66663 14.6024 1.66663 9.99999C1.66663 5.39762 5.39759 1.66666 9.99996 1.66666C14.6023 1.66666 18.3333 5.39762 18.3333 9.99999Z" stroke="#4B5563" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_6406_8735">
+                                                <rect width="20" height="20" fill="white"></rect>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <div class="text-xs text-heading-secondary font-bold text-[#374151] leading-[18px]">Ngày trả xe</div>
+                        <div class="flex space-x-1 mt-2">
+                            <div class="space-y-2 flex-1 xl:flex-auto">
+                                <div class="date-picker flex items-center justify-between min-w-[140px] h-11 border-[1px] border-solid border-border-primary px-3 py-2.5 text-base bg-white cursor-pointer hover:border-brand-primary"
+                                    id="return-date-picker" data-picker="return-date">
+                                    <span id="return-date">06/09/2025</span>
+                                    <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6.08268 1.66667C6.08268 1.25246 5.7469 0.916672 5.33268 0.916672C4.91847 0.916672 4.58268 1.25246 4.58268 1.66667H6.08268ZM4.58268 5.00001C4.58268 5.41422 4.91847 5.75001 5.33268 5.75001C5.7469 5.75001 6.08268 5.41422 6.08268 5.00001H4.58268ZM12.7493 1.66667C12.7493 1.25246 12.4136 0.916672 11.9993 0.916672C11.5851 0.916672 11.2493 1.25246 11.2493 1.66667H12.7493ZM11.2493 5.00001C11.2493 5.41422 11.5851 5.75001 11.9993 5.75001C12.4136 5.75001 12.7493 5.41422 12.7493 5.00001H11.2493ZM3.66602 4.08334H13.666V2.58334H3.66602V4.08334ZM15.416 5.83334V15.8333H16.916V5.83334H15.416ZM13.666 17.5833H3.66602V19.0833H13.666V17.5833ZM1.91602 15.8333V5.83334H0.416016V15.8333H1.91602ZM3.66602 17.5833C2.69952 17.5833 1.91602 16.7998 1.91602 15.8333H0.416016C0.416016 17.6283 1.87109 19.0833 3.66602 19.0833V17.5833ZM15.416 15.8333C15.416 16.7998 14.6325 17.5833 13.666 17.5833V19.0833C15.4609 19.0833 16.916 17.6283 16.916 15.8333H15.416ZM13.666 4.08334C14.6325 4.08334 15.416 4.86684 15.416 5.83334H16.916C16.916 4.03841 15.4609 2.58334 13.666 2.58334V4.08334ZM3.66602 2.58334C1.87109 2.58334 0.416016 4.03841 0.416016 5.83334H1.91602C1.91602 4.86684 2.69952 4.08334 3.66602 4.08334V2.58334ZM1.16602 9.08334H16.166V7.58334H1.16602V9.08334ZM4.58268 1.66667V5.00001H6.08268V1.66667H4.58268ZM11.2493 1.66667V5.00001H12.7493V1.66667H11.2493Z"
+                                            fill="#4B5563"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="space-y-2 flex-1 xl:flex-auto">
+                                <div class="time-picker flex items-center justify-between min-w-[140px] h-11 border-[1px] border-solid border-border-primary px-3 py-2.5 text-base bg-white cursor-pointer hover:border-brand-primary"
+                                    id="return-time-picker" data-picker="return-time">
+                                    <span id="return-time">16:10</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        <g clip-path="url(#clip0_6406_8735)">
+                                            <path d="M9.99996 5.83332V9.99999L8.33329 12.5M18.3333 9.99999C18.3333 14.6024 14.6023 18.3333 9.99996 18.3333C5.39759 18.3333 1.66663 14.6024 1.66663 9.99999C1.66663 5.39762 5.39759 1.66666 9.99996 1.66666C14.6023 1.66666 18.3333 5.39762 18.3333 9.99999Z" stroke="#4B5563" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_6406_8735">
+                                                <rect width="20" height="20" fill="white"></rect>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 flex flex-col justify-between">
+                        <div class="h-4"></div>
+                        <div class="flex space-x-2 mt-2">
+                             <button
+                                class="cancel-btn inline-flex items-center justify-center whitespace-nowrap transition-colors h-11 px-4 py-2 w-1/2 text-base font-bold
+                                bg-gray-200 text-gray-800 hover:bg-gray-300 rounded-md"
+                                type="button" id="cancel-pick-time">
+                                Hủy
+                            </button>
+                            <button
+                                class="submit-btn inline-flex items-center justify-center whitespace-nowrap transition-colors h-11 px-4 py-2 w-1/2 text-base font-bold
+                                bg-cyan-background text-white hover:bg-cyan-background/90 rounded-md"
+                                type="submit">
+                                Xác nhận
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div id="calendar-modal" class="hidden fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+        <div class="day-picker-wrap bg-white" onclick="event.stopPropagation();">
+            <div class="rdp p-3 custom-calendar rdp-multiple_months">
+                <div class="flex flex-col justify-center sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0">
+                    <div class="space-y-4 rdp-caption_start">
+                        <div class="flex justify-center pt-1 relative items-center">
+                            <div class="text-sm font-medium leading-[21px]" aria-live="polite" role="presentation"
+                                id="month-caption-1"></div>
+                            <div class="space-x-1 flex items-center">
+                                <button name="previous-month"
+                                    aria-label="Go to previous month"
+                                    id="prev-month-btn"
+                                    class="rdp-button_reset rdp-button inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input shadow-sm hover:bg-accent hover:text-accent-foreground h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute left-1"
+                                    type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-chevron-left h-4 w-4">
+                                        <path d="m15 18-6-6 6-6"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <table class="w-full border-collapse space-y-1" role="grid" aria-labelledby="month-caption-1">
+                            <thead class="rdp-head">
+                                <tr class="flex justify-center">
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Hai">Th 2</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Ba">Th 3</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Tư">Th 4</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Năm">Th 5</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Sáu">Th 6</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Bảy">Th 7</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Chủ Nhật">CN</th>
+                                </tr>
+                            </thead>
+                            <tbody class="rdp-tbody" id="calendar-body-1">
+                                </tbody>
+                        </table>
+                    </div>
+                    <div class="space-y-4 rdp-caption_end">
+                        <div class="flex justify-center pt-1 relative items-center">
+                            <div class="text-sm font-medium leading-[21px]" aria-live="polite" role="presentation"
+                                id="month-caption-2"></div>
+                            <div class="space-x-1 flex items-center">
+                                <button name="next-month" aria-label="Go to next month"
+                                    id="next-month-btn"
+                                    class="rdp-button_reset rdp-button inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input shadow-sm hover:bg-accent hover:text-accent-foreground h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute right-1"
+                                    type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-chevron-right h-4 w-4">
+                                        <path d="m9 18 6-6-6-6"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <table class="w-full border-collapse space-y-1" role="grid" aria-labelledby="month-caption-2">
+                            <thead class="rdp-head">
+                                <tr class="flex justify-center">
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Hai">Th 2</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Ba">Th 3</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Tư">Th 4</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Năm">Th 5</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Sáu">Th 6</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Thứ Bảy">Th 7</th>
+                                    <th scope="col"
+                                        class="text-slate-500 rounded-md w-10 font-normal text-[0.8rem] leading-[19.2px]"
+                                        aria-label="Chủ Nhật">CN</th>
+                                </tr>
+                            </thead>
+                            <tbody class="rdp-tbody" id="calendar-body-2">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="time-picker-modal" class="hidden fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+         </div>
+
+    <script src="pick-time.js"></script>
+</body>
+
+</html>

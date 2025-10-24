@@ -1,0 +1,62 @@
+#header-black {
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: 'SVN-Poppins';
+}
+
+.login-btn-item {
+    line-height: 24px;
+}
+
+/* Responsive styles for 1200px breakpoint */
+@media (max-width: 1199px) {
+    /* Hide navigation text elements below 1200px */
+    .xls\:flex {
+        display: none !important;
+    }
+    
+    .xls\:block {
+        display: none !important;
+    }
+    
+    /* Show menu button below 1200px */
+    .xls\:hidden {
+        display: block !important;
+    }
+    
+    /* Hide mobile menu dropdown by default */
+    .xls\:hidden .fixed {
+        display: none;
+    }
+    
+    /* Show mobile menu dropdown when active */
+    .xls\:hidden.menu-active .fixed {
+        display: flex;
+    }
+}
+
+@media (min-width: 1200px) {
+    /* Show navigation elements at 1200px and above */
+    .xls\:flex {
+        display: flex !important;
+    }
+    
+    .xls\:block {
+        display: block !important;
+    }
+    
+    /* Hide menu button at 1200px and above */
+    .xls\:hidden {
+        display: none !important;
+    }
+    
+    /* Always hide mobile menu dropdown on desktop */
+    .xls\:hidden .fixed {
+        display: none !important;
+    }
+}
+
+.active {
+    color: #07F668 !important;
+}

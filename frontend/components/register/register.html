@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="register.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <div
+      class="fixed inset-0 flex items-center justify-center z-50 md:px-1 px-3 h-full bg-black bg-opacity-50"
+    >
+      <div
+        class="flex bg-white shadow-md rounded-lg md:max-w-7xl md:w-[50vw] md:max-h-[85vh] relative"
+      >
+        <div
+          class="md:w-1/2 w-full p-8 md:overflow-y-auto max-h-[85vh] overflow-y-auto"
+        >
+          <button
+            class="absolute top-4 right-4 text-black rounded-full md:hidden"
+          >
+            <svg
+              class="w-6 h-6 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18 17.94 6M18 18 6.06 6"
+              ></path>
+            </svg>
+          </button>
+          <div class="flex logo items-center justify-center md:p-3 p-3 w-full">
+            <img
+              src="/frontend/assets/images/logo_gf_black.svg"
+              alt="blog"
+              class="md:mx-0 mx-auto max-w-full h-20"
+            />
+          </div>
+          <h2
+            class="text-3xl font-bold mb-4 text-center md:py-8 py-3 text-black"
+          >
+            Đăng ký
+          </h2>
+          <form
+            class="space-y-2 max-w-[600px] flex-shrink-0 w-full"
+            novalidate=""
+          >
+            <div class="space-y-2">
+              <label
+                class="text-label peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[14px] font-medium"
+                for=":r2:-form-item"
+                >Tên<span class="text-red">*</span></label
+              ><input
+                class="text-input flex w-full rounded-md border border-input bg-transparent px-3 py-1 shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 h-[36px] placeholder:text-[14px] text-[14px]"
+                id=":r2:-form-item"
+                aria-describedby=":r2:-form-item-description"
+                aria-invalid="false"
+                type="text"
+                value=""
+                name="fullname"
+              />
+            </div>
+            <div class="space-y-2">
+              <label
+                class="text-label peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[14px] font-medium"
+                for=":r3:-form-item"
+                >Email<span class="text-red">*</span></label
+              ><input
+                class="text-input flex w-full rounded-md border border-input bg-transparent px-3 py-1 shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 h-[36px] placeholder:text-[14px] text-[14px]"
+                id="emailSignup"
+                aria-describedby=":r3:-form-item-description"
+                aria-invalid="false"
+                type="email"
+                value=""
+                name="email"
+              />
+            </div>
+            <div class="space-y-2">
+              <label
+                class="text-label peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[14px] font-medium"
+                for=":r4:-form-item"
+                >Số điện thoại<span class="text-red">*</span></label
+              ><input
+                class="text-input flex w-full rounded-md border border-input bg-transparent px-3 py-1 shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 h-[36px] placeholder:text-[14px] text-[14px]"
+                id="phone"
+                aria-describedby=":r4:-form-item-description"
+                aria-invalid="false"
+                type="text"
+                value=""
+                name="phone"
+              />
+            </div>
+            <div class="space-y-2">
+              <label
+                class="text-label peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[14px] font-medium"
+                for=":r5:-form-item"
+                >Mật khẩu<span class="text-red">*</span></label
+              >
+              <div class="relative">
+                <input
+                  class="text-input flex w-full rounded-md border border-input bg-transparent px-3 py-1 shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 h-[36px] placeholder:text-[14px] text-[14px]"
+                  id="passwordSignup"
+                  aria-describedby=":r5:-form-item-description"
+                  aria-invalid="false"
+                  type="password"
+                  value=""
+                  name="password"
+                /><button
+                  type="button"
+                  class="btn-eye absolute inset-y-0 right-0 flex items-center px-3 text-gray-400"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fas"
+                    data-icon="eye-slash"
+                    class="svg-inline--fa fa-eye-slash text-zinc-400"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 640 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label
+                class="text-label peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-[14px] font-medium"
+                for=":r6:-form-item"
+                >Nhập lại mật khẩu<span class="text-red">*</span></label
+              >
+              <div class="relative">
+                <input
+                  class="text-input flex w-full rounded-md border border-input bg-transparent px-3 py-1 shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 h-[36px] placeholder:text-[14px] text-[14px]"
+                  id=":r6:-form-item"
+                  aria-describedby=":r6:-form-item-description"
+                  aria-invalid="false"
+                  type="password"
+                  value=""
+                  name="confirmPassword"
+                /><button
+                  type="button"
+                  class="btn-eye absolute inset-y-0 right-0 flex items-center px-3 text-gray-400"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fas"
+                    data-icon="eye-slash"
+                    class="svg-inline--fa fa-eye-slash text-zinc-400"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 640 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c8.4-19.3 10.6-41.4 4.8-63.3c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zM373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5L373 389.9z"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center mb-4 py-2">
+              <input id="terms" class="mr-2" type="checkbox" /><label
+                for="terms"
+                class="text-sm"
+                >Tôi đã đọc và đồng ý với
+                <a
+                  class="text-blue-500"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="/policy"
+                  >Chính sách &amp; quy định</a
+                >
+                và
+                <a
+                  class="text-blue-500"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="/personal-data-policy"
+                  >Chính sách bảo vệ dữ liệu cá nhân của Green Future</a
+                ></label
+              >
+            </div>
+            <button
+              class="btn-register inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow hover:bg-cyan-background/90 h-[40px] px-4 py-2 !mt-3 w-full bg-buttom-primary text-white"
+              type="submit"
+              disabled=""
+            >
+              Đăng ký
+            </button>
+            <div class="relative text-center my-7">
+              <hr class="border-t border-gray-300 my-7" />
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="bg-white px-2">Hoặc</span>
+              </div>
+            </div>
+            <p class="mt-4 text-center">
+              <button
+                class="btn-google inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow hover:bg-cyan-background/90 h-[40px] px-4 py-2 bg-white text-black border-1 border-gray !mt-1 w-full"
+                type="button"
+              >
+                <img
+                  alt="Google Icon"
+                  loading="lazy"
+                  width="20"
+                  height="20"
+                  decoding="async"
+                  data-nimg="1"
+                  class="mr-2"
+                  src="/frontend/assets/images/social-google-icon.svg"
+                  style="color: transparent"
+                />Đăng nhập bằng Google
+              </button>
+            </p>
+          </form>
+          <p class="mt-4 text-center">
+            Bạn đã có tài khoản?
+            <button type="button" class="text-login text-cyan-background underline" onclick="window.parent.postMessage({type:'openLoginModal'},'*')">
+              Đăng nhập ngay
+            </button>
+          </p>
+        </div>
+        <div class="image-login w-1/2 relative rounded-lg hidden md:block">
+          <img
+            src="/frontend/assets/images/new_login.png"
+            alt="Car"
+            class="object-cover w-full h-full rounded-r-lg"
+          /><button
+            class="absolute top-4 right-4 bg-white text-black rounded-full p-2 shadow-md"
+          >
+            <svg
+              class="w-6 h-6 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18 17.94 6M18 18 6.06 6"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

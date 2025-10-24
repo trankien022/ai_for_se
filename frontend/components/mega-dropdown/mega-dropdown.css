@@ -1,0 +1,23 @@
+/* Mega Dropdown Component Styles */
+
+.hover\:text-\[#07F668\]:hover {
+    color: #07F668;
+}
+
+.border-\[#3C3C432E\] {
+    border-color: rgba(60, 60, 67, 0.18);
+}
+
+.text-\[#2AC769\] {
+    color: #2AC769;
+}
+
+.dropdown-hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.dropdown-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

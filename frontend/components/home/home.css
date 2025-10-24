@@ -1,0 +1,747 @@
+.font-tektur {
+    font-family: 'Tektur' !important;
+}
+
+.text-subtitle {
+    font-family: 'SVN-Poppins';
+}
+
+.rent-bg {
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.rent-title {
+    font-family: 'SVN-Poppins';
+}
+
+.rent-subtitle, .rent-btn {
+    font-family: 'SVN-Poppins';
+    line-height: 24px;
+}
+
+.cars-carousel-wrap {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.cars-carousel {
+    align-items: center;
+    cursor: grab;
+    display: flex;
+    height: 723px;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.3s ease;
+    user-select: none;
+    width: 100%;
+}
+
+.cars-carousel:active {
+    cursor: grabbing;
+}
+
+/* Cars slide positioning and scaling */
+.cars-slide {
+    background: none !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    position: absolute;
+    top: 50% !important;
+    transform-origin: center center !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    z-index: 1 !important;
+}
+
+.cars-slide.center {
+    left: 50% !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+    visibility: visible !important;
+    z-index: 3 !important;
+}
+
+.cars-slide.left {
+    left: calc(50% - 467px) !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+    visibility: visible !important;
+    z-index: 2 !important;
+}
+
+.cars-slide.right {
+    left: calc(50% + 467px) !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+    visibility: visible !important;
+    z-index: 2 !important;
+}
+
+.cars-slide.hidden {
+    opacity: 0 !important;
+    transform: translate(-50%, -50%) scale(0.8) !important;
+    transition: opacity 0.2s ease-out, visibility 0s linear 0.2s, transform 0.2s ease-out !important;
+    visibility: hidden !important;
+    z-index: 0 !important;
+}
+
+.cars-slide-inner {
+    align-items: center;
+    display: flex;
+    height: auto;
+    justify-content: center;
+    width: auto;
+}
+
+.cars-card-link {
+    display: block;
+    height: auto;
+    margin: 0 auto;
+    text-decoration: none;
+    width: auto;
+}
+
+.cars-card {
+    background: url("https://greenfuture.tech/images/rents/service_card_bg.webp") center/cover;
+    border: 0.8px solid #dee2e6;
+    border-radius: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 487px;
+    margin: auto;
+    padding-bottom: 40px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 397px;
+}
+
+/* Center slide has larger card size */
+.cars-slide.center .cars-card {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    height: 573px;
+    padding: 0 35px;
+    width: 467px;
+}
+
+/* Side slides keep original size */
+.cars-slide.left .cars-card,
+.cars-slide.right .cars-card {
+    height: 487px;
+    width: 397px;
+}
+
+/* Scaling components for center slide - Updated for 35px padding */
+.cars-slide.center .cars-badge {
+    height: 31px;
+    margin-left: 0;
+    margin-top: 40px;
+    padding: 5px 12px;
+    width: 123px;
+}
+
+.cars-slide.center .cars-badge-text {
+    font-size: 12px;
+    line-height: 21px;
+}
+
+.cars-slide.center .cars-name {
+    font-size: 33px;
+    height: 39px;
+    line-height: 39px;
+    margin: 12px 0 17px 0;
+    padding-left: 0;
+    width: 100%;
+}
+
+.cars-slide.center .cars-img {
+    height: 342px;
+    width: 100%;
+}
+
+.cars-slide.center .cars-specs {
+    gap: 0;
+    height: 54px;
+    padding-left: 0;
+    width: 100%;
+}
+
+.cars-slide.center .cars-spec-group1 {
+    height: 54px;
+    width: 174px;
+}
+
+.cars-slide.center .cars-spec-group2 {
+    height: 54px;
+    width: 261px;
+}
+
+.cars-slide.center .cars-spec-item {
+    gap: 5px;
+    height: 27px;
+    width: 174px;
+}
+
+.cars-slide.center .cars-spec-text {
+    font-size: 19px;
+    line-height: 32px;
+}
+
+/* Scale spec icons for center slide */
+.cars-slide.center .cars-spec-item img {
+    height: 24px;
+    width: 24px;
+}
+
+/* Smooth transitions for all card components */
+.cars-badge,
+.cars-badge-text,
+.cars-name,
+.cars-img,
+.cars-specs,
+.cars-spec-item,
+.cars-spec-text,
+.cars-spec-item img {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Disable card link clicks in carousel - only allow drag and dot navigation */
+.cars-carousel .cars-card-link {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Re-enable drag on carousel container */
+.cars-carousel {
+    pointer-events: auto;
+}
+
+/* Ensure dots can be clicked */
+.cars-dots,
+.cars-dot {
+    pointer-events: auto;
+}
+
+.cars-badge {
+    align-items: center;
+    background: #00423e;
+    border-radius: 28px;
+    color: #fff;
+    display: flex;
+    gap: 4px;
+    height: 26px;
+    justify-content: flex-start;
+    margin-left: 25px;
+    margin-top: 34px;
+    padding: 4px 10px;
+    width: 105px;
+}
+
+.cars-badge-text {
+    font-family: 'SVN-Poppins';
+    font-size: 10px;
+    line-height: 18px;
+    white-space: nowrap;
+}
+
+.cars-name {
+    color: #fff;
+    font-family: 'SVN-Poppins';
+    font-size: 28px;
+    font-weight: 500;
+    height: 33px;
+    line-height: 33px;
+    margin: 10px 0 14px 0;
+    padding-left: 30px;
+    width: 396px;
+}
+
+.cars-img {
+    flex-shrink: 0;
+    height: 290px;
+    margin-bottom: 0;
+    object-fit: cover;
+    width: 396px;
+}
+
+/* Use flexbox for easier layout */
+.cars-specs {
+    align-items: center;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    height: 46px;
+    justify-content: flex-start;
+    margin-top: 0;
+    padding-left: 30px;
+    width: 396px;
+}
+
+.cars-spec-group1 {
+    height: 46px;
+    width: 148px;
+}
+
+.cars-spec-group2 {
+    height: 46px;
+    width: 222px;
+}
+
+.cars-spec-item {
+    align-items: center;
+    color: #fff;
+    display: flex;
+    gap: normal 4px;
+    height: 23px;
+    width: 148px;
+}
+
+.cars-spec-text {
+    color: #fff;
+    font-family: 'SVN-Poppins';
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 27px;
+    text-wrap: nowrap;
+}
+
+.cars-controls {
+    align-items: center;
+    color: #111827;
+    display: flex;
+    font-size: 14px;
+    gap: 19.2px;
+    grid-template-columns: auto 1fr;
+    justify-content: center;
+    line-height: 21px;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 20;
+}
+
+.cars-dots {
+    align-items: center;
+    color: #111827;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 14px;
+    gap: 8px;
+    justify-content: flex-end;
+    line-height: 21px;
+    margin: 0px -9.6px 0px 0px;
+    position: relative;
+    z-index: 30;
+}
+
+.cars-dot {
+    align-items: center;
+    background-color: #909bc6;
+    border: none;
+    border-radius: 50%;
+    color: #111827;
+    cursor: pointer;
+    display: flex;
+    height: 10px;
+    justify-content: center;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 10px;
+}
+
+.cars-dot:hover {
+    background-color: #7289da;
+}
+
+.cars-dot--active {
+    background-color: #5274ff;
+}
+
+.header-iframe {
+    background: transparent;
+    border: none;
+    height: auto;
+    left: 0;
+    min-height: 0;
+    pointer-events: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.footer-iframe {
+    background: transparent;
+    border: none;
+    pointer-events: auto;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+}
+
+.motorcycles-bg {
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.motorcycles-title {
+    font-family: 'SVN-Poppins';
+}
+
+.motorcycles-subtitle, .motorcycles-btn {
+    font-family: 'SVN-Poppins';
+    line-height: 24px;
+}
+
+.motorcycles-carousel-wrap {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.motorcycles-carousel {
+    align-items: center;
+    cursor: grab;
+    display: flex;
+    height: 723px;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.3s ease;
+    user-select: none;
+    width: 100%;
+}
+
+.motorcycles-carousel:active {
+    cursor: grabbing;
+}
+
+/* Motorcycles slide positioning and scaling */
+.motorcycles-slide {
+    background: none !important;
+    border: none !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    position: absolute;
+    top: 50% !important;
+    transform-origin: center center !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    z-index: 1 !important;
+}
+
+.motorcycles-slide.center {
+    left: 50% !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+    visibility: visible !important;
+    z-index: 3 !important;
+}
+
+.motorcycles-slide.left {
+    left: calc(50% - 467px) !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+    visibility: visible !important;
+    z-index: 2 !important;
+}
+
+.motorcycles-slide.right {
+    left: calc(50% + 467px) !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+    visibility: visible !important;
+    z-index: 2 !important;
+}
+
+.motorcycles-slide.hidden {
+    opacity: 0 !important;
+    transform: translate(-50%, -50%) scale(0.8) !important;
+    transition: opacity 0.2s ease-out, visibility 0s linear 0.2s, transform 0.2s ease-out !important;
+    visibility: hidden !important;
+    z-index: 0 !important;
+}
+
+.motorcycles-slide-inner {
+    align-items: center;
+    display: flex;
+    height: auto;
+    justify-content: center;
+    width: auto;
+}
+
+.motorcycles-card-link {
+    display: block;
+    height: auto;
+    margin: 0 auto;
+    text-decoration: none;
+    width: auto;
+}
+
+.motorcycles-card {
+    background: url("https://greenfuture.tech/images/rents/service_card_bg.webp") center/cover;
+    border: 0.8px solid #dee2e6;
+    border-radius: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 487px;
+    margin: auto;
+    padding-bottom: 40px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 397px;
+}
+
+/* Center slide has larger card size */
+.motorcycles-slide.center .motorcycles-card {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    height: 573px;
+    padding: 0 35px;
+    width: 467px;
+}
+
+/* Side slides keep original size */
+.motorcycles-slide.left .motorcycles-card,
+.motorcycles-slide.right .motorcycles-card {
+    height: 487px;
+    width: 397px;
+}
+
+/* Scaling components for center slide - Updated for 35px padding */
+.motorcycles-slide.center .motorcycles-badge {
+    height: 31px;
+    margin-left: 0;
+    margin-top: 40px;
+    padding: 5px 12px;
+    width: 123px;
+}
+
+.motorcycles-slide.center .motorcycles-badge-text {
+    font-size: 12px;
+    line-height: 21px;
+}
+
+.motorcycles-slide.center .motorcycles-name {
+    font-size: 33px;
+    height: 39px;
+    line-height: 39px;
+    margin: 12px 0 17px 0;
+    padding-left: 0;
+    width: 100%;
+}
+
+.motorcycles-slide.center .motorcycles-img {
+    height: 342px;
+    width: 100%;
+}
+
+.motorcycles-slide.center .motorcycles-specs {
+    gap: 0;
+    height: 54px;
+    padding-left: 0;
+    width: 100%;
+}
+
+.motorcycles-slide.center .motorcycles-spec-group1 {
+    height: 54px;
+    width: 174px;
+}
+
+.motorcycles-slide.center .motorcycles-spec-group2 {
+    height: 54px;
+    width: 261px;
+}
+
+.motorcycles-slide.center .motorcycles-spec-item {
+    gap: 5px;
+    height: 27px;
+    width: 174px;
+}
+
+.motorcycles-slide.center .motorcycles-spec-text {
+    font-size: 19px;
+    line-height: 32px;
+}
+
+/* Scale spec icons for center slide */
+.motorcycles-slide.center .motorcycles-spec-item img {
+    height: 24px;
+    width: 24px;
+}
+
+/* Smooth transitions for all card components */
+.motorcycles-badge,
+.motorcycles-badge-text,
+.motorcycles-name,
+.motorcycles-img,
+.motorcycles-specs,
+.motorcycles-spec-item,
+.motorcycles-spec-text,
+.motorcycles-spec-item img {
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Disable card link clicks in carousel - only allow drag and dot navigation */
+.motorcycles-carousel .motorcycles-card-link {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Re-enable drag on carousel container */
+.motorcycles-carousel {
+    pointer-events: auto;
+}
+
+/* Ensure dots can be clicked */
+.motorcycles-dots,
+.motorcycles-dot {
+    pointer-events: auto;
+}
+
+.motorcycles-badge {
+    align-items: center;
+    background: #00423e;
+    border-radius: 28px;
+    color: #fff;
+    display: flex;
+    gap: 4px;
+    height: 26px;
+    justify-content: flex-start;
+    margin-left: 25px;
+    margin-top: 34px;
+    padding: 4px 10px;
+    width: 105px;
+}
+
+.motorcycles-badge-text {
+    font-family: 'SVN-Poppins';
+    font-size: 10px;
+    line-height: 18px;
+    white-space: nowrap;
+}
+
+.motorcycles-name {
+    color: #fff;
+    font-family: 'SVN-Poppins';
+    font-size: 28px;
+    font-weight: 500;
+    height: 33px;
+    line-height: 33px;
+    margin: 10px 0 14px 0;
+    padding-left: 30px;
+    width: 396px;
+}
+
+.motorcycles-img {
+    width: 396px;
+    height: 290px;
+    object-fit: cover;
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+
+/* Use flexbox for easier layout */
+.motorcycles-specs {
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 30px;
+    width: 396px;
+    height: 46px;
+    margin-top: 0;
+    gap: 0;
+}
+
+.motorcycles-spec-group1 {
+    width: 148px;
+    height: 46px;
+}
+
+.motorcycles-spec-group2 {
+    width: 222px;
+    height: 46px;
+}
+
+.motorcycles-spec-item {
+    align-items: center;
+    color: #fff;
+    display: flex;
+    gap: normal 4px;
+    height: 23px;
+    width: 148px;
+}
+
+.motorcycles-spec-text {
+    color: #fff;
+    font-family: 'SVN-Poppins';
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 27px;
+    text-wrap: nowrap;
+}
+
+.motorcycles-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 19.2px;
+    grid-template-columns: auto 1fr;
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 20;
+}
+
+.motorcycles-dots {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    margin: 0px -9.6px 0px 0px;
+    position: relative;
+    z-index: 30;
+}
+
+.motorcycles-dot {
+    width: 10px;
+    height: 10px;
+    align-items: center;
+    background-color: #909bc6;
+    border-radius: 50%;
+    color: #111827;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.motorcycles-dot:hover {
+    background-color: #7289da;
+}
+
+.motorcycles-dot--active {
+    background-color: #5274ff;
+}

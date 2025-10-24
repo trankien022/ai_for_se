@@ -1,0 +1,89 @@
+#rental-form {
+    background-color: #fff;
+    box-shadow: #0000002d 0px 16px 48px 0px;
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: 'Mulish';
+    /* Sửa width để vừa vặn hơn */
+    width: 376px; 
+}
+
+.submit-btn {
+    background-color: #00d287;
+}
+
+/* THÊM NÚT HỦY */
+.cancel-btn {
+    background-color: #E5E7EB; /* Màu xám nhạt */
+    color: #1F2937; /* Màu chữ tối */
+}
+.cancel-btn:hover {
+    background-color: #D1D5DB; /* Màu xám đậm hơn khi hover */
+}
+
+
+.tab-btn.active {
+    background-color: #00d287;
+    color: #fff;
+}
+
+/* --- CÁC CLASS DROPDOWN CITY ĐÃ BỊ XÓA --- */
+/*
+.dropdown-menu { ... }
+.dropdown-menu.show { ... }
+.dropdown-item { ... }
+.dropdown-item svg { ... }
+.dropdown-item:hover { ... }
+.dropdown-item.selected { ... }
+.city-selector.open { ... }
+*/
+
+.day-picker-wrap {
+    background-color: #fff;
+    border-color: #dee2e6;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 0.8px;
+    box-shadow: #0000 0px 0px 0px 0px;
+    color: #020617;
+    font-size: 14px;
+    line-height: 21px;
+    width: 602px;
+    font-family: 'Mulish';
+    overflow: hidden;
+}
+
+.rdp-multiple_months {
+    width: 600px;
+    overflow: hidden;
+}
+
+#calendar-modal.hidden {
+    display: none;
+}
+
+#calendar-modal {
+    display: flex;
+}
+
+/* Thêm style cho input ẩn của thuê tháng/năm */
+.duration-input.hidden {
+    display: none;
+}
+.duration-input.show {
+    display: block;
+}
+
+/* Thêm style cho date/time picker bị vô hiệu hóa */
+.date-picker.disabled,
+.time-picker.disabled {
+    background-color: #f3f4f6; /* Màu nền xám */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.date-picker.disabled:hover,
+.time-picker.disabled:hover {
+    border-color: #D1D5DB; /* Giữ nguyên border khi hover */
+}

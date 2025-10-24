@@ -1,0 +1,45 @@
+.bg-opacity-50 {
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: 'Mulish';
+}
+
+.logo img {
+    width: 122px;
+    height: 80px;
+}
+
+.text-label {
+    display: inline-block;
+}
+
+.text-input {
+    border-color: #dee2e6;
+    box-shadow: #00000013 0px 2px 4px 0px;
+}
+
+.text-red {
+    color: #fb5454;
+}
+
+.btn-register {
+    background-color: #00d289;
+}
+
+.btn-eye {
+    width: 42px;
+    height: 36px;
+}
+
+.btn-google {
+    border-color: #eff4fb;
+    border-style: solid;
+    border-width: 0.8px;
+    box-shadow: #00000026 0px 8px 16px 0px;
+    line-height: 21px;
+}
+
+.text-login {
+    color: #00d287;
+}

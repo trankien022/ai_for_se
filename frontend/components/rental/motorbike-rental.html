@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="rental.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Thuê Xe Máy Điện</title>
+    <style>
+      /* Ẩn nội dung chính cho đến khi header load xong */
+      .font-svn-poppins {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.2s ease-in;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Nhúng header đơn giản -->
+    <iframe
+      class="header-iframe"
+      src="../header/header.html"
+      style="border: none; width: 100%"
+      scrolling="no"
+    ></iframe>
+    <!-- Nhúng mega dropdown -->
+    <iframe
+      id="mega-dropdown-iframe"
+      class="mega-dropdown-iframe fixed top-[80px] left-0 w-screen z-40"
+      src="../mega-dropdown/mega-dropdown.html"
+      style="border: none; display: none; height: 0px"
+      scrolling="no"
+    ></iframe>
+    <div class="font-svn-poppins">
+      <div class="bg-secondary-light pb-6" style="margin-top: 24px;">
+        <div class="gf-container">
+          <div>
+            <div id="rental-filter"></div>
+            <div class="mt-4">
+              <div class="car-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="rental-component.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("rental-filter").innerHTML =
+          generateRentalFilter();
+        // Load motorbikes
+        fetchVehicles('motorbikes').then(motorbikes => generateRentalList(motorbikes));
+      });
+    </script>
+    <iframe
+      class="footer-iframe"
+      src="../footer/footer.html"
+      style="border: none; width: 100%; z-index: 10; position: relative"
+    ></iframe>
+    <script>
+      window.addEventListener("message", function (event) {
+        if (event.data && event.data.type === "toggleMegaDropdown") {
+          const iframe = document.getElementById("mega-dropdown-iframe");
+          if (iframe) {
+            const isVisible = iframe.style.display !== "none";
+            if (!isVisible) {
+              // When showing
+              iframe.style.display = "block";
+              setTimeout(() => {
+                iframe.contentWindow.postMessage({ type: "showDropdown" }, "*");
+                document
+                  .querySelector(".header-iframe")
+                  .contentWindow.postMessage({ type: "dropdownShown" }, "*");
+              }, 10);
+            } else {
+              // When hiding
+              iframe.contentWindow.postMessage({ type: "hideDropdown" }, "*");
+              document
+                .querySelector(".header-iframe")
+                .contentWindow.postMessage({ type: "dropdownHidden" }, "*");
+              setTimeout(() => {
+                iframe.style.display = "none";
+              }, 300);
+            }
+          }
+        }
+        if (event.data && event.data.type === "dropdownHeight") {
+          const iframe = document.getElementById("mega-dropdown-iframe");
+          if (iframe) {
+            iframe.style.height = event.data.height + "px";
+          }
+        }
+        if (event.data && event.data.type === "footerHeight") {
+          const iframe = document.querySelector(".footer-iframe");
+          if (iframe) {
+            iframe.style.height = event.data.height + "px";
+          }
+        }
+
+        if (event.data && event.data.type === "headerHeight") {
+          var mainContent = document.querySelector(".font-svn-poppins");
+          if (mainContent) {
+            mainContent.style.paddingTop = event.data.height + "px";
+            // Hiển thị content
+            mainContent.style.visibility = "visible";
+            mainContent.style.opacity = 1;
+          }
+        }
+      });
+
+      // Click outside to hide
+      document.addEventListener("click", function (event) {
+        const iframe = document.getElementById("mega-dropdown-iframe");
+        if (
+          iframe &&
+          iframe.style.display !== "none" &&
+          event.target !== iframe
+        ) {
+          iframe.contentWindow.postMessage({ type: "hideDropdown" }, "*");
+          document
+            .querySelector(".header-iframe")
+            .contentWindow.postMessage({ type: "dropdownHidden" }, "*");
+          setTimeout(() => {
+            iframe.style.display = "none";
+          }, 300);
+        }
+      });
+    </script>
+  </body>
+</html>

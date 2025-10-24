@@ -1,0 +1,228 @@
+.modal-bg {
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: 'Mulish';
+}
+
+.modal-content {
+    background-color: #fff;
+    border-color: #0000002d;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 0.8px;
+    color: #111827;
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+}
+
+.modal-header {
+    align-items: center;
+    border-radius: 7px 7px 0px 0px;
+    justify-content: space-between;
+    padding: 40px 60px 0px;
+}
+
+.modal-body {
+    padding: 30px 60px 60px;
+}
+
+.modal-title {
+    font-family: 'Mulish';
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 42px;
+    text-align: left;
+}
+
+.c-car-info {
+    align-items: center;
+    background-color: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    width: 424px;
+}
+
+.c-register-rent-box {
+    display: flex;
+    gap: 0px;
+    width: 100%;
+}
+
+.c-register-rent-box__right {
+    order: 2;
+    /* width: 424px; */
+}
+
+.c-register-rent-box__left {
+    order: 1;
+    width: 654px;
+}
+
+.row.g-3.mb-3 {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -16px -8px 12px;
+    width: 670px;
+}
+
+.col-md-4 {
+    margin: 16px 0px 0px;
+    padding: 0px 8px;
+    display: flex;
+    flex-direction: column;
+    width: 223px;
+    flex: none;
+}
+
+.col-md-6 {
+    margin: 16px 0px 0px;
+    padding: 0px 8px;
+    display: flex;
+    flex-direction: column;
+    width: 335px;
+    flex: none;
+}
+
+.col-md-12 {
+    margin: 16px 0px 0px;
+    padding: 0px 8px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.c-car-card {
+    align-items: center;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+figure {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 154px;
+    height: 70px;
+}
+
+figure img {
+    width: 124px;
+}
+
+.c-car-card__title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+}
+
+.form-label {
+    display: inline-block;
+    font-weight: 500;
+    margin: 0px 0px 8px;
+}
+
+.form-control {
+    border-color: #dee2e6;
+    border-style: solid;
+    border-width: 0.8px;
+    color: #212529;
+    font-size: 15.2px;
+    line-height: 22.8px;
+    padding: 8px 16px;
+    height: 41px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    border-color: #00d287;
+    border-width: 0.8px;
+}
+
+.col-md-4 .form-control {
+    width: 207px;
+}
+
+.col-md-6 .form-control {
+    width: 319px;
+}
+
+.text-red {
+    color: #fb5454;
+}
+
+.pickup-location {
+    height: 60px;
+}
+
+.c-car-info__btn {
+    display: grid;
+    grid-template-columns: 654.412px;
+    grid-template-rows: 41.6px;
+}
+
+.custom-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1.6px solid #999;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+
+  .custom-checkbox:checked {
+    background-color: #00d287;
+    border-color: #00d287;
+  }
+
+  .custom-checkbox:checked::after {
+    content: "✓";
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+.c-car-info__top {
+    margin-top: 24px;
+    width: 376px;
+}
+
+.c-car-info__table {
+    margin: 14px 0px 20px 0px;
+}
+
+.c-car-info__bottom {
+    width: 376px;
+}
+
+.table-header {
+    margin: 0px 0px 4px;
+}
+
+.table-title {
+    font-weight: 700;
+    line-height: 21.6px;
+}
+
+.btn-close {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+    background-position: 50% 50%;
+    background-size: 14px;
+    border-radius: 6px;
+    margin: -40px -30px -8px 862.35px;
+    padding: 8px;
+    text-align: center;
+}

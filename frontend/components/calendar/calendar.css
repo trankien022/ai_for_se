@@ -1,0 +1,23 @@
+body {
+    overflow: hidden;
+}
+
+.day-picker-wrap {
+    background-color: #fff;
+    border-color: #dee2e6;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 0.8px;
+    box-shadow: #0000 0px 0px 0px 0px;
+    color: #020617;
+    font-size: 14px;
+    line-height: 21px;
+    width: 602px;
+    font-family: 'Mulish';
+    overflow: hidden;
+}
+
+.rdp-multiple_months {
+    width: 600px;
+    overflow: hidden;
+}

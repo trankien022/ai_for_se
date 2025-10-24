@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TVT Future - Dịch Vụ Cho Thuê Xe Linh Hoạt</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Tektur:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="/asset/images/logo_gf_black.svg" />
+    <link rel="stylesheet" href="../../assets/fonts.css" />
+    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="../login/login.css" />
+    <link rel="stylesheet" href="../register/register.css" />
+    <link rel="stylesheet" href="../password/password.css" />
+    <link rel="stylesheet" href="../password/otp/otp.css" />
+    <link rel="stylesheet" href="../password/otp/change-pass/change.css" />
+    <!-- Thêm dòng này nếu chưa có -->
+
+    <style>
+      /* Ẩn nội dung chính cho đến khi header load xong */
+      .font-svn-poppins {
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.2s ease-in;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Nhúng header đơn giản -->
+    <iframe
+      class="header-iframe"
+      src="../header/header.html"
+      style="border: none"
+      scrolling="no"
+    ></iframe>
+    <!-- Nhúng mega dropdown -->
+    <iframe
+      id="mega-dropdown-iframe"
+      class="mega-dropdown-iframe fixed top-[80px] left-0 w-screen z-40"
+      src="../mega-dropdown/mega-dropdown.html"
+      style="border: none; display: none; height: 0px"
+      scrolling="no"
+    ></iframe>
+    <div class="font-svn-poppins">
+      <div id="banner">
+        <div class="" style="opacity: 1; transform: none">
+          <div
+            id="banner-section"
+            class="relative h-[85vh] sm:h-screen flex justify-center"
+          >
+            <img
+              alt="Banner background"
+              fetchpriority="high"
+              decoding="async"
+              data-nimg="fill"
+              class="object-cover object-center"
+              sizes="100vw"
+              src="../../assets/images/desktop_1920.jpg"
+              style="
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                inset: 0px;
+                color: transparent;
+              "
+            />
+            <div class="relative z-10 w-full">
+              <div
+                class="flex flex-col items-center sm:justify-start justify-between mt-[36px] sm:mt-[64px] sm:mb-0 h-[75vh]"
+              >
+                <div class="flex flex-col items-center">
+                  <p
+                    class="font-tektur text-[#07F668] sm:text-[32px] xl:text-[64px] text-[28px] font-normal text-center sm:max-w-[564px] xl:max-w-[800px] max-w-[340px] leading-[120%] xl:leading-[72px] sm:mb-4 xl:mb-6"
+                  >
+                    Đáp ứng mọi nhu cầu thuê xe
+                  </p>
+                  <p
+                    class="text-subtitle text-center text-white text-sm sm:text-base xl:text-[28px] sm:leading-[32px] sm:mb-[32px] xl:mb-[32px] max-w-[340px] xl:max-w-[1200px] sm:max-w-[564px]"
+                  >
+                    Cung cấp dịch vụ thuê xe tự lái, phục vụ mọi nhu cầu di
+                    chuyển của bạn
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="rents">
+        <div class="" style="opacity: 1; transform: none">
+          <div class="mx-auto">
+            <div class="rent-bg flex flex-col items-center">
+              <div class="text-center sm:mt-16 mt-9 px-4 sm:px-0">
+                <p
+                  class="rent-title sm:font-[600] sm:text-[36px] leading-[120%] text-xl font-[500] mb-1 sm:mb-3"
+                >
+                  Thuê xe ô tô tự lái
+                </p>
+                <p class="rent-subtitle font-[400] text-[16px] sm:mb-0">
+                  Dịch vụ thuê xe ô tô tự lái chuyên nghiệp – linh hoạt theo
+                  ngày / tháng, đáp ứng mọi nhu cầu di chuyển cá nhân.
+                </p>
+                <a class="text-[#090806] no-underline" href="../rental/car-rental.html"
+                  ><button
+                    class="rent-btn inline-flex items-center justify-center whitespace-nowrap text-[16px] font-[500] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:bg-[#CECECD] h-[48px] py-[12px] px-[32px] rounded-full text-[#090806] border border-black shadow-none sm:mt-[36px] mt-0 bg-[#FFF] hover:bg-[#07F668] min-w-[190px]"
+                  >
+                    Xem chi tiết
+                  </button></a
+                >
+              </div>
+              <div class="cars-carousel-wrap">
+                <div class="cars-carousel" id="cars-carousel">
+                  <!-- Slides will be generated dynamically by JS -->
+                </div>
+                <div class="cars-controls" style="margin-bottom: 48px">
+                  <div class="cars-dots">
+                    <button
+                      type="button"
+                      class="cars-dot cars-dot--active"
+                    ></button>
+                    <button type="button" class="cars-dot"></button>
+                    <button type="button" class="cars-dot"></button>
+                    <button type="button" class="cars-dot"></button>
+                    <button type="button" class="cars-dot"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="motorcycles">
+        <div class="" style="opacity: 1; transform: none">
+          <div class="mx-auto">
+            <div class="motorcycles-bg flex flex-col items-center">
+              <div class="text-center sm:mt-16 mt-9 px-4 sm:px-0">
+                <p
+                  class="motorcycles-title sm:font-[600] sm:text-[36px] leading-[120%] text-xl font-[500] mb-1 sm:mb-3"
+                >
+                  Thuê xe máy tự lái
+                </p>
+                <p class="motorcycles-subtitle font-[400] text-[16px] sm:mb-0">
+                  Dịch vụ thuê xe máy tự lái chuyên nghiệp – linh hoạt theo ngày
+                  / tháng, đáp ứng mọi nhu cầu di chuyển cá nhân.
+                </p>
+                <a
+                  class="text-[#090806] no-underline"
+                  href="../rental/motorbike-rental.html"
+                  ><button
+                    class="motorcycles-btn inline-flex items-center justify-center whitespace-nowrap text-[16px] font-[500] transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:bg-[#CECECD] h-[48px] py-[12px] px-[32px] rounded-full text-[#090806] border border-black shadow-none sm:mt-[36px] mt-0 bg-[#FFF] hover:bg-[#07F668] min-w-[190px]"
+                  >
+                    Xem chi tiết
+                  </button></a
+                >
+              </div>
+              <div class="motorcycles-carousel-wrap">
+                <div class="motorcycles-carousel" id="motorcycles-carousel">
+                  <!-- Slides will be generated dynamically by JS -->
+                </div>
+                <div class="motorcycles-controls" style="margin-bottom: 48px">
+                  <div class="motorcycles-dots">
+                    <button
+                      type="button"
+                      class="motorcycles-dot motorcycles-dot--active"
+                    ></button>
+                    <button type="button" class="motorcycles-dot"></button>
+                    <button type="button" class="motorcycles-dot"></button>
+                    <button type="button" class="motorcycles-dot"></button>
+                    <button type="button" class="motorcycles-dot"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="popup-login"
+      class="hidden fixed inset-0 flex items-center justify-center z-[1000] bg-black bg-opacity-50"
+      style="height: 100vh"
+    >
+      <div
+        id="popup-login-content"
+        class="flex items-center justify-center w-full h-full"
+      ></div>
+    </div>
+    <script src="home.js"></script>
+    <iframe
+      class="footer-iframe"
+      src="../footer/footer.html"
+      style="border: none; width: 100%; z-index: 10; position: relative"
+    ></iframe>
+    <script>
+      window.addEventListener("message", function (event) {
+        if (event.data && event.data.type === "toggleMegaDropdown") {
+          const iframe = document.getElementById("mega-dropdown-iframe");
+          if (iframe) {
+            const isVisible = iframe.style.display !== "none";
+            if (!isVisible) {
+              // When showing
+              iframe.style.display = 'block';
+              setTimeout(() => {
+                iframe.contentWindow.postMessage({ type: "showDropdown" }, "*");
+                document.querySelector('.header-iframe').contentWindow.postMessage({ type: "dropdownShown" }, "*");
+              }, 10);
+            } else {
+              // When hiding
+              iframe.contentWindow.postMessage({ type: "hideDropdown" }, "*");
+              document.querySelector('.header-iframe').contentWindow.postMessage({ type: "dropdownHidden" }, "*");
+              setTimeout(() => {
+                iframe.style.display = 'none';
+              }, 300);
+            }
+          }
+        }
+        if (event.data && event.data.type === "dropdownHeight") {
+          const iframe = document.getElementById("mega-dropdown-iframe");
+          if (iframe) {
+            iframe.style.height = event.data.height + "px";
+          }
+        }
+      });
+
+      // Click outside to hide
+      document.addEventListener('click', function(event) {
+        const iframe = document.getElementById('mega-dropdown-iframe');
+        if (iframe && iframe.style.display !== 'none' && event.target !== iframe) {
+          iframe.contentWindow.postMessage({ type: "hideDropdown" }, "*");
+          document.querySelector('.header-iframe').contentWindow.postMessage({ type: "dropdownHidden" }, "*");
+          setTimeout(() => {
+            iframe.style.display = 'none';
+          }, 300);
+        }
+      });
+    </script>
+  </body>
+</html>

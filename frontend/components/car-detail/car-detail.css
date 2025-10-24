@@ -1,0 +1,578 @@
+/* Gallery navigation buttons overlay */
+.embla__buttons {
+    position: absolute;
+    top: 179px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.embla__button {
+    pointer-events: auto;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.embla__button--prev {
+    margin-left: 15px;
+}
+
+.embla__button--next {
+    margin-right: 15px;
+}
+
+.embla__button {
+    pointer-events: auto;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    z-index: 10;
+    padding: 0;
+    margin: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.embla__button[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* --- FIX FONT PATH --- */
+@font-face {
+    font-family: 'SVN Poppins';
+    src: url('../../assets/fonts/SVN-Poppins-Thin.otf') format('opentype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SVN Poppins';
+    src: url('../../assets/fonts/SVN-Poppins-ExtraLight.otf') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SVN Poppins';
+    src: url('../../assets/fonts/SVN-Poppins-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SVN Poppins';
+    src: url('../../assets/fonts/SVN-Poppins-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SVN Poppins';
+    src: url('../../assets/fonts/SVN-Poppins-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SVN Poppins';
+    src: url('../../assets/fonts/SVN-Poppins-SemiBold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SVN Poppins';
+    src: url('../../assets/fonts/SVN-Poppins-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SVN Poppins';
+    src: url('../../assets/fonts/SVN-Poppins-ExtraBold.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SVN Poppins';
+    src: url('../../assets/fonts/SVN-Poppins-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+/* --- END FIX FONT PATH --- */
+
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #222;
+    /* --- REMOVED padding-top: 80px; --- */
+    font-family: 'SVN Poppins', sans-serif;
+}
+
+.main {
+    padding: 16px 16px 16px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.car-gallery {
+    width: 630px;
+    height: 445px;
+    min-width: 630px;
+    min-height: 445px;
+    max-width: 630px;
+    max-height: 445px;
+    flex: none;
+    position: relative;
+    margin-left: 152px;
+}
+
+/* ... (Tất cả CSS khác của bạn giữ nguyên) ... */
+.gallery-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: auto;
+    overflow: hidden;
+    border-radius: 8px;
+    /* Đảm bảo bo tròn viền khi kéo/chuyển ảnh */
+}
+
+.gallery-img {
+    width: 622px;
+    height: 350px;
+    border-radius: 8px;
+    object-fit: cover;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s;
+    margin-top: 4px;
+    background: #fff;
+    box-shadow: none;
+}
+
+/* Đảm bảo mọi ảnh overlay khi slide cũng bo tròn viền */
+.gallery-main img {
+    border-radius: 8px !important;
+    background: #fff;
+}
+
+.gallery-thumbs {
+    position: static;
+    display: flex;
+    gap: 6px;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 622px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    margin-top: 22px;
+    cursor: grab;
+    user-select: none;
+}
+
+.gallery-thumbs.dragging {
+    cursor: grabbing;
+}
+
+.gallery-thumbs::-webkit-scrollbar {
+    display: none;
+}
+
+.thumb,
+.gallery-thumbs img {
+    width: 88px !important;
+    min-width: 88px;
+    max-width: 88px;
+    height: 49px !important;
+    min-height: 49px;
+    max-height: 49px;
+    flex: 0 0 88px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 2px solid #eee;
+    cursor: pointer;
+}
+
+.thumb.selected {
+    border-color: #00CC7C;
+}
+
+.car-inf {
+    width: 554px;
+    min-width: 554px;
+    max-width: 554px;
+    /* height: 445px; */ /* <-- ĐÃ XÓA */
+    flex: none;
+    border-radius: 8px;
+    padding: 0 24px 24px 0;
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.car-title {
+    margin: 0;
+    color: #111827;
+    font-family: 'Mulish';
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 50.4px;
+}
+
+.car-price {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 10px;
+    margin-left: 0;
+}
+
+.car-price .price {
+    color: #00d287;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 28px;
+    margin: 0;
+    font-family: 'Mulish';
+}
+
+.car-price .unit {
+    margin-left: 5px;
+    color: #374151;
+    display: inline-block;
+    font-weight: 600;
+    line-height: 1.1;
+    font-family: 'Mulish';
+    font-size: 16px;
+}
+
+.car-hint {
+    font-size: 12px;
+    font-weight: 700;
+    background-color: #e8eefc;
+    border-radius: 4px;
+    color: #28a745;
+    line-height: 28px;
+    padding: 0px 8px;
+    width: 174px;
+    font-family: 'Mulish';
+    margin-top: 12px;
+}
+
+.car-specs {
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+    border-style: solid;
+    border-width: 0.8px;
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    padding: 15px;
+    height: 144px;
+    width: 554px;
+    margin-top: 25px;
+}
+
+.car-specs li {
+    align-items: center;
+    color: #111827;
+    display: flex;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.btn-book {
+    background-color: #00d287;
+    border-color: #00d287;
+    border-style: solid;
+    border-width: 0.8px;
+    color: #fff;
+    font-family: 'Mulish';
+    font-weight: 700;
+    line-height: 24px;
+    padding: 8px 16px;
+    text-align: center;
+    width: 554px;
+    height: 42px;
+    font-size: 16px;
+    margin-top: 25px;
+}
+
+.car-utilities,
+.car-conditions,
+.car-similar {
+    margin-top: 32px;
+}
+
+.car-utilities ul,
+.car-conditions ul {
+    list-style: disc inside;
+    margin: 0 0 12px 0;
+    padding: 0 0 0 16px;
+}
+
+.car-similar .similar-list {
+    display: flex;
+}
+
+.similar-item {
+    color: #222;
+    background: #f8f8f8;
+    border-radius: 8px;
+    width: 389px;
+    height: 317px;
+    border-color: #ddd;
+    border-style: solid;
+    border-width: 0.8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.similar-item img {
+    border-radius: 4px;
+    width: 358px;
+    height: 207px;
+}
+
+.similar-title {
+    font-family: 'Mulish';
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.similar-price {
+    color: #00d287;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 28px;
+    text-align: center;
+    font-family: 'Mulish';
+    margin-top: 10px;
+}
+
+
+/* Car detail grid utility box */
+.box_row {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.utilities-box {
+    background-color: #f9fafb;
+    border-color: #e5e7eb;
+    border-style: solid;
+    border-width: 0.8px;
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    padding: 15px;
+}
+
+.box_row .utilities-box {
+    width: 554px;
+}
+
+.main-feature {
+    align-items: center;
+    color: #111827;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 14px;
+    line-height: 21px;
+    width: 514px;
+    height: 112px;
+    margin-left: 4px;
+}
+
+.item {
+    align-items: center;
+    display: flex;
+    width: 257px;
+    height: 20px;
+}
+
+.item .icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+}
+
+.item .content {
+    color: #374151;
+    font-size: 14px;
+    line-height: 19.6px;
+    font-family: 'Mulish';
+}
+
+.car-utilities {
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    margin: 0px 0px 0px 140px;
+    padding: 0px 12px;
+    width: 827px;
+    /* height: 543px; */ /* <-- ĐÃ XÓA */
+    font-family: 'Mulish';
+}
+
+.widget_title {
+    color: #111827;
+    font-family: 'Mulish';
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 33.6px;
+}
+
+.widget_title_name2 {
+    margin-top: 30px;
+}
+
+.another-feature {
+    align-items: center;
+    color: #111827;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 14px;
+    line-height: 21px;
+    width: 764px;
+    height: auto; /* Sửa height: 28px thành auto */
+    margin-left: 3.5px;
+}
+
+.another-feature .item {
+    width: 382px;
+    height: 20px;
+    margin-bottom: 8px; /* Thêm margin-bottom để không bị dính nhau */
+}
+
+.information,
+.payment {
+    width: 779px;
+    font-family: 'Mulish';
+    align-items: center;
+}
+
+.information .label,
+.payment .label,
+.deposit .label {
+    color: #111827;
+    font-weight: 600;
+    line-height: 22.4px;
+    width: 771px;
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-family: 'Mulish';
+}
+
+.information .content,
+.payment .content {
+    margin-bottom: 8px;
+    width: 771px;
+    height: 20px;
+}
+
+.deposit {
+    width: 779px;
+}
+
+.widget_content .utilities-box {
+    margin-top: 16px;
+}
+
+.widget_content .utilities-box:first-child {
+    width: 803px;
+}
+
+.widget_title_name {
+    color: #111827;
+    font-family: 'Mulish';
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 33.6px;
+    width: 384px;
+    height: 34px;
+}
+
+.car-similar {
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 12px;
+}
+
+.vn-price-unit {
+    color: #374151;
+    display: inline;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 0px;
+    margin: 0 0 0 5px;
+    text-align: center;
+    font-family: 'Mulish';
+    margin-top: 16px;
+}
+
+
+/* --- THÊM CSS CHO IFRAME --- */
+.header-iframe {
+    background: transparent;
+    border: none;
+    height: auto;
+    left: 0;
+    min-height: 0;
+    pointer-events: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.mega-dropdown-iframe {
+    position: fixed;
+    top: 80px; /* Cập nhật chiều cao header của bạn nếu cần */
+    left: 0;
+    width: 100%;
+    z-index: 40;
+    border: none;
+    display: none;
+    height: 0px;
+}
+
+.footer-iframe {
+    background: transparent;
+    border: none;
+    pointer-events: auto;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="time.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="time-container flex-1 xl:flex-auto relative">
+        <div class="time-display flex items-center justify-between min-w-[140px] h-11 border-[1px] border-solid border-border-primary px-3 py-2.5 text-base bg-white cursor-pointer hover:border-brand-primary"
+            type="button" id="time-trigger" aria-haspopup="menu" aria-expanded="false" data-state="closed">
+            <span id="selected-time"></span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"
+                fill="none">
+                <g clip-path="url(#clip0_6406_8735)">
+                    <path
+                        d="M9.99996 5.83332V9.99999L8.33329 12.5M18.3333 9.99999C18.3333 14.6024 14.6023 18.3333 9.99996 18.3333C5.39759 18.3333 1.66663 14.6024 1.66663 9.99999C1.66663 5.39762 5.39759 1.66666 9.99996 1.66666C14.6023 1.66666 18.3333 5.39762 18.3333 9.99999Z"
+                        stroke="#4B5563" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+                <defs>
+                    <clipPath id="clip0_6406_8735">
+                        <rect width="20" height="20" fill="white"></rect>
+                    </clipPath>
+                </defs>
+            </svg></div>
+
+        <div id="time-dropdown" class="hidden" data-radix-popper-content-wrapper="" dir="ltr">
+            <div data-side="bottom" data-align="center" role="menu" aria-orientation="vertical" data-state="open"
+                data-radix-menu-content="" dir="ltr" id="radix-:r6:" aria-labelledby="radix-:r5:"
+                class="z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 w-auto p-0"
+                tabindex="-1" data-orientation="vertical"
+                style="outline: none; pointer-events: auto;">
+                <div class="flex w-[310px] md:w-[244px] xl:w-[140px]"
+                    style="height: 300px; position: relative; display: flex; justify-content: center; overflow: hidden; mask-image: linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);">
+                    <div id="hours-column"
+                        style="flex: 1 1 0%; max-height: 100%; transition-property: transform; transition-timing-function: cubic-bezier(0, 0, 0.2, 1); transition-duration: 300ms; transform: translate3d(0px, 25px, 0px);">
+                    </div>
+                    <div id="minutes-column"
+                        style="flex: 1 1 0%; max-height: 100%; transition-property: transform; transition-timing-function: cubic-bezier(0, 0, 0.2, 1); transition-duration: 300ms; transform: translate3d(0px, 25px, 0px);">
+                    </div>
+                    <div
+                        style="height: 50px; margin-top: -25px; position: absolute; top: 50%; left: 0px; width: 100%; pointer-events: none;">
+                        <div
+                            style="position: absolute; inset: 0px auto auto 0px; width: 100%; height: 1px; background: rgb(217, 217, 217); transform: scaleY(0.5);">
+                        </div>
+                        <div
+                            style="position: absolute; inset: auto auto 0px 0px; width: 100%; height: 1px; background: rgb(217, 217, 217); transform: scaleY(0.5);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="time.js"></script>
+</body>
+
+</html>

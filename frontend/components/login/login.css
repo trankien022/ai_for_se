@@ -1,0 +1,55 @@
+.bg-opacity-50 {
+    color: #111827;
+    font-family: 'Mulish';
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.logo img {
+    height: 80px;
+    width: 122px;
+}
+
+.text-label {
+    display: inline-block;
+}
+
+.text-input {
+    border-color: #dee2e6;
+    box-shadow: #00000013 0px 2px 4px 0px;
+}
+
+.btn-login {
+    background-color: #00d289;
+    box-shadow: #00000026 0px 8px 16px 0px;
+    line-height: 21px;
+}
+
+.btn-login:hover {
+    background-color: #19d693;
+}
+
+.text-forget-pw {
+    color: #00d287;
+}
+
+.btn-google {
+    border-color: #eff4fb;
+    border-style: solid;
+    border-width: 0.8px;
+    box-shadow: #00000026 0px 8px 16px 0px;
+    line-height: 21px;
+}
+
+.text-answer {
+    margin: 4px 0px 16px;
+}
+
+.btn-regiter {
+    color: #00d287;
+}
+
+.btn-eye {
+    height: 36px;
+    width: 42px;
+}

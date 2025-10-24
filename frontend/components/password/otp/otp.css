@@ -1,0 +1,28 @@
+.bg-opacity-50 {
+    color: #111827;
+    font-size: 14px;
+    line-height: 21px;
+    font-family: 'Mulish';
+}
+
+.logo img {
+    width: 122px;
+    height: 80px;
+}
+
+.text-3xl {
+    margin: 0px 0px 8px;
+}
+
+.otp-input {
+    border-color: #d9e1e2;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 0.8px;
+    gap: 13px;
+    line-height: 24px;
+}
+
+.btn-submit {
+    background-color: #00d289;
+}

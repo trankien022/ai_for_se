@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="modal.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div
+        class="modal-bg fixed inset-0 flex items-center justify-center z-50 md:px-1 px-3 h-full overflow-y-scroll bg-black bg-opacity-50">
+        <div class="modal-custom modal fade" id="modal-register-rent-car" aria-hidden="true"
+            aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog modal-dialog-centered modal-xl modal-fullscreen-md-down relative">
+                <div class="modal-content relative">
+                    <div class="modal-header flex justify-between">
+                        <h1 class="modal-title">Đăng ký thuê xe</h1><button class="btn-close" aria-label="Close"
+                            id="close-modal-btn" type="button"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="c-register-rent-box">
+                            <div class="c-register-rent-box__right">
+                                <div class="c-car-info">
+                                    <div class="c-car-info__top">
+                                        <div class="c-car-card">
+                                            <div class="c-car-card__content">
+                                                <div class="c-car-card__title" id="modal-car-title">Đang tải...</div>
+                                            </div>
+                                            <div class="c-car-card__img">
+                                                <figure><img src="" alt="image" id="modal-car-image"></figure>
+                                            </div>
+                                        </div>
+                                        <div class="modal-filter-edit relative">
+                                            <div id="edit-time-trigger"
+                                                class="flex cursor-pointer items-center justify-between space-x-2 bg-[#E7EFF4] rounded border-[1px] border-stroke px-3 py-2 outline-none mb-[32px]"
+                                                style="border-color: rgb(132, 163, 182);">
+                                                <div class="relative space-y-1">
+                                                    <div class="text-base font-bold" id="display-location">Hồ Chí Minh</div>
+                                                    <div class="text-base font-bold" style="margin: -4px 0px 7px;">
+                                                    </div>
+                                                    <div class="flex items-center text-sm space-x-1">
+                                                        <span id="display-duration">1 ngày</span>
+                                                        <span>•</span>
+                                                        <span id="display-pickup-datetime">10:00 07/08/2025</span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13"
+                                                            viewBox="0 0 12 13" fill="none" class="shrink-0">
+                                                            <path
+                                                                d="M1.5 6.81818C1.5 6.54203 1.72386 6.31818 2 6.31818H8.79289L6.14645 3.67173C5.95118 3.47647 5.95118 3.15989 6.14645 2.96462C6.34171 2.76936 6.65829 2.76936 6.85355 2.96462L10.3536 6.46462C10.5488 6.65988 10.5488 6.97647 10.3536 7.17173L6.85355 10.6717C6.65829 10.867 6.34171 10.867 6.14645 10.6717C5.95118 10.4765 5.95118 10.1599 6.14645 9.96462L8.79289 7.31818H2C1.72386 7.31818 1.5 7.09432 1.5 6.81818Z"
+                                                                fill="#7F7F7F"></path>
+                                                        </svg>
+                                                        <span id="display-return-datetime">10:00 08/08/2025</span>
+                                                    </div>
+                                                    <div id="display-rental-type">Hình thức thuê: Theo ngày</div>
+                                                </div><svg width="16" height="17" viewBox="0 0 16 17" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    class="absolute top-1/2 right-[3%] mt-[-8px]">
+                                                    <path
+                                                        d="M14.236 2.58204C13.2123 1.55835 11.5525 1.55835 10.5289 2.58204L2.65722 10.4537C2.28304 10.8278 2.01623 11.2957 1.88467 11.8082L1.01571 15.1937C0.971767 15.3649 1.02148 15.5466 1.14646 15.6715C1.27144 15.7965 1.45312 15.8462 1.62432 15.8023L5.00978 14.9333C5.52234 14.8018 5.99015 14.5349 6.36433 14.1608L14.236 6.28914C15.2596 5.26545 15.2596 3.60573 14.236 2.58204ZM11.236 3.28914C11.8691 2.65598 12.8957 2.65598 13.5288 3.28914C14.162 3.92231 14.162 4.94887 13.5288 5.58204L12.75 6.36086L10.4571 4.06797L11.236 3.28914ZM9.75002 4.77507L12.0429 7.06797L5.65722 13.4537C5.40969 13.7012 5.10023 13.8777 4.76117 13.9647L2.19447 14.6235L2.85327 12.0568C2.9403 11.7178 3.1168 11.4083 3.36433 11.1608L9.75002 4.77507Z"
+                                                        fill="#7F7F7F"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="c-car-info__bottom" style="transform: translateY(-14px);">
+                                        <div class="c-car-info__table">
+                                            <div
+                                                class="table-header d-flex mb-1 justify-content-between align-items-center">
+                                                <h2 class="table-title text-[18px] text-[#3c3c3c] mb-[15px]">Bảng kê chi
+                                                    tiết</h2>
+                                            </div>
+                                            <div class="flex items-center justify-between mb-[16px]">
+                                                <label class="flex-1">Cước phí niêm yết</label>
+                                                <span id="modal-base-price">0đ</span>
+                                            </div>
+                                            <hr class="mb-[16px]">
+                                            <div class="flex justify-between items-center mb-2">
+                                                <label>
+                                                    <b class="text-[16px] font-bold text-[#111827] leading-[24px]">Tổng
+                                                        tiền</b>
+                                                </label>
+                                                <span class="text-[18px] font-bold text-[#111827] leading-[27px]" id="modal-total-price">
+                                                    0đ
+                                                </span>
+                                            </div>
+
+                                            <div class="flex justify-between items-center mb-2">
+                                                <span class="text-[16px] font-bold text-[#111827]">Tiền đặt cọc</span>
+                                                <span class="text-[18px] font-bold text-[#111827]" id="modal-deposit-price">0đ</span>
+                                            </div>
+
+                                            <div class="flex justify-between items-center mb-[16px]">
+                                                <label>Voucher</label>
+                                                <span class="text-[#FF0000] font-semibold" id="modal-voucher-price">-0đ</span>
+                                            </div>
+                                            <hr class="mb-[16px]">
+                                            <div class="flex justify-between items-center">
+                                                <label class="font-bold">Thanh toán*</label>
+                                                <span class="text-[22px] font-bold leading-[33px] text-[#00D287]" id="modal-final-payment">
+                                                    0đ
+                                                </span>
+                                            </div>
+                                            <div class="d-flex mt-1 flex-col"><span
+                                                    class="text-dark-theme-text font-normal text-xs">*Giá thuê xe đã bao
+                                                    gồm VAT.</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-register-rent-box__left">
+                                <div class="c-register-rent-form">
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-md-4"><label class="form-label">Tên người thuê<span
+                                                    class="text-red">*</span></label><input
+                                                class="form-control form-control-lg" placeholder="Họ và tên" required=""
+                                                type="text" value="Nguyễn Chí Vương" name="name"></div>
+                                        <div class="col-md-4 relative"><label class="form-label">Số điện thoại<span
+                                                    class="text-red">*</span></label><input
+                                                class="form-control form-control-lg disabled:bg-[#F7F9F9] disabled:cursor-not-allowed"
+                                                required="" placeholder="Nhập 09xxxxx" disabled="" type="tel"
+                                                value="+84778579293" name="phone"><img alt="tick" loading="lazy"
+                                                width="20" height="20" decoding="async" data-nimg="1"
+                                                class="absolute right-[13px] bottom-[10px]"
+                                                src="../../assets/images/tick.svg" style="color: transparent;"></div>
+                                        <div class="col-md-4 relative"><label class="form-label">Email<span
+                                                    class="text-red">*</span></label><input
+                                                class="form-control form-control-lg disabled:bg-[#F7F9F9] disabled:cursor-not-allowed"
+                                                placeholder="Địa chỉ Email" required="" disabled="" type="email"
+                                                value="nguyenchivuong.73@gmail.com" name="email"><img alt="tick"
+                                                loading="lazy" width="20" height="20" decoding="async" data-nimg="1"
+                                                class="absolute right-[11px] top-[39px]"
+                                                src="../../assets/images/tick.svg" style="color: transparent;"></div>
+                                        
+                                        <div class="col-md-12">
+                                            <div class="relative pickup-location" id="pickup-trigger">
+                                                <label class="form-label">Địa điểm nhận xe<span
+                                                        class="text-red">*</span></label>
+                                                <div class="flex items-center justify-between min-w-[140px] h-11 border-[1px] border-solid border-border-primary px-3 py-2.5 text-base bg-white cursor-pointer hover:border-brand-primary"
+                                                    style="border-color: rgb(222, 226, 230);">
+                                                    <span id="pickup-selected">Chọn địa điểm nhận xe</span>
+                                                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M1.41 0.589996L6 5.17L10.59 0.589996L12 2L6 8L0 2L1.41 0.589996Z"
+                                                            fill="#6B7280"></path>
+                                                    </svg>
+                                                </div>
+                                                <div id="pickup-dropdown"
+                                                    class="w-full absolute right-0 top-full max-h-40 overflow-y-scroll z-40 w-40 space-y-1 border border-stroke bg-white dark:border-strokedark dark:bg-boxdark"
+                                                    style="display:none; border-color: rgb(222, 226, 230);">
+                                                    
+                                                    <div class="pickup-option flex w-full items-center gap-2 py-1.5 text-left text-sm hover:bg-[#F3F4F6] dark:hover:bg-meta-4">
+                                                        <div class="location-menu-item ml-4"><svg width="12" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 7C10 8.65685 8.65685 10 7 10C5.34315 10 4 8.65685 4 7C4 5.34315 5.34315 4 7 4C8.65685 4 10 5.34315 10 7ZM9 7C9 5.89543 8.10457 5 7 5C5.89543 5 5 5.89543 5 7C5 8.10457 5.89543 9 7 9C8.10457 9 9 8.10457 9 7ZM11.9497 11.955C14.6834 9.2201 14.6834 4.78601 11.9497 2.05115C9.21608 -0.683716 4.78392 -0.683716 2.05025 2.05115C-0.683418 4.78601 -0.683418 9.2201 2.05025 11.955L3.57128 13.4538L5.61408 15.4389L5.74691 15.5567C6.52168 16.1847 7.65623 16.1455 8.38611 15.4391L10.8223 13.0691L11.9497 11.955ZM2.75499 2.75619C5.09944 0.410715 8.90055 0.410715 11.245 2.75619C13.5294 5.04153 13.5879 8.71039 11.4207 11.0667L11.245 11.2499L9.92371 12.5539L7.69315 14.7225L7.60016 14.8021C7.24594 15.0699 6.7543 15.0698 6.40012 14.802L6.30713 14.7224L3.3263 11.817L2.75499 11.2499L2.57927 11.0667C0.412077 8.71039 0.47065 5.04153 2.75499 2.75619Z" fill="#111827"></path></svg></div>
+                                                        <span>Vincom Đồng Khởi</span>
+                                                    </div>
+                                                    <div class="pickup-option flex w-full items-center gap-2 py-1.5 text-left text-sm hover:bg-[#F3F4F6] dark:hover:bg-meta-4">
+                                                        <div class="location-menu-item ml-4"><svg width="12" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 7C10 8.65685 8.65685 10 7 10C5.34315 10 4 8.65685 4 7C4 5.34315 5.34315 4 7 4C8.65685 4 10 5.34315 10 7ZM9 7C9 5.89543 8.10457 5 7 5C5.89543 5 5 5.89543 5 7C5 8.10457 5.89543 9 7 9C8.10457 9 9 8.10457 9 7ZM11.9497 11.955C14.6834 9.2201 14.6834 4.78601 11.9497 2.05115C9.21608 -0.683716 4.78392 -0.683716 2.05025 2.05115C-0.683418 4.78601 -0.683418 9.2201 2.05025 11.955L3.57128 13.4538L5.61408 15.4389L5.74691 15.5567C6.52168 16.1847 7.65623 16.1455 8.38611 15.4391L10.8223 13.0691L11.9497 11.955ZM2.75499 2.75619C5.09944 0.410715 8.90055 0.410715 11.245 2.75619C13.5294 5.04153 13.5879 8.71039 11.4207 11.0667L11.245 11.2499L9.92371 12.5539L7.69315 14.7225L7.60016 14.8021C7.24594 15.0699 6.7543 15.0698 6.40012 14.802L6.30713 14.7224L3.3263 11.817L2.75499 11.2499L2.57927 11.0667C0.412077 8.71039 0.47065 5.04153 2.75499 2.75619Z" fill="#111827"></path></svg></div>
+                                                        <span>Vincom Landmark81</span>
+                                                    </div>
+                                                    <div class="pickup-option flex w-full items-center gap-2 py-1.5 text-left text-sm hover:bg-[#F3F4F6] dark:hover:bg-meta-4">
+                                                        <div class="location-menu-item ml-4"><svg width="12" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 7C10 8.65685 8.65685 10 7 10C5.34315 10 4 8.65685 4 7C4 5.34315 5.34315 4 7 4C8.65685 4 10 5.34315 10 7ZM9 7C9 5.89543 8.10457 5 7 5C5.89543 5 5 5.89543 5 7C5 8.10457 5.89543 9 7 9C8.10457 9 9 8.10457 9 7ZM11.9497 11.955C14.6834 9.2201 14.6834 4.78601 11.9497 2.05115C9.21608 -0.683716 4.78392 -0.683716 2.05025 2.05115C-0.683418 4.78601 -0.683418 9.2201 2.05025 11.955L3.57128 13.4538L5.61408 15.4389L5.74691 15.5567C6.52168 16.1847 7.65623 16.1455 8.38611 15.4391L10.8223 13.0691L11.9497 11.955ZM2.75499 2.75619C5.09944 0.410715 8.90055 0.410715 11.245 2.75619C13.5294 5.04153 13.5879 8.71039 11.4207 11.0667L11.245 11.2499L9.92371 12.5539L7.69315 14.7225L7.60016 14.8021C7.24594 15.0699 6.7543 15.0698 6.40012 14.802L6.30713 14.7224L3.3263 11.817L2.75499 11.2499L2.57927 11.0667C0.412077 8.71039 0.47065 5.04153 2.75499 2.75619Z" fill="#111827"></path></svg></div>
+                                                        <span>Vincom Mega Mall Thảo Điền</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6"><label class="form-label">Ghi chú</label><input
+                                                class="form-control form-control-lg" value="" name="notes"></div>
+                                        <div class="col-md-6"><label class="form-label">Voucher</label>
+                                            <input class="form-control form-control-lg" placeholder="Nhập mã voucher"
+                                                value="" name="voucher">
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center mt-4 py-2">
+                                        <input id="terms" type="checkbox" class="custom-checkbox flex-shrink-0 mr-2" />
+                                        <label for="terms" class="text-sm">
+                                            Đã đọc và đồng ý với
+                                            <a class="text-[#000] text-base cursor-pointer underline">Điều khoản thanh
+                                                toán</a>
+                                            của TVT Future
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center mb-4 py-2">
+                                        <input id="term-data" type="checkbox"
+                                            class="custom-checkbox flex-shrink-0 mr-2" />
+                                        <label for="term-data" class="text-sm">
+                                            Tôi đồng ý để lại thông tin cá nhân theo
+                                            <a class="text-[#000] text-base cursor-pointer underline">Điều khoản chia sẻ
+                                                dữ liệu cá nhân</a>
+                                            của TVT Future
+                                        </label>
+                                    </div>
+                                    <div class="c-car-info__table_bonus hidden py-2">
+                                        <h2 class="text-xl py-1">Bảng kê chi tiết</h2>
+                                        <div>
+                                            <div class="d-flex mb-1 justify-content-between align-items-center">
+                                                <label>Cước phí niêm yết </label><span id="modal-base-price-bonus">0đ</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="d-flex justify-content-between align-items-center mb-2"><label><b
+                                                    class="text-[17px] font-bold text-[#111827]">Tổng
+                                                    tiền</b></label><span
+                                                class="c-car-info__total_black text-[18px] font-bold text-[#111827]" id="modal-total-price-bonus">0đ</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2"><label><b
+                                                    class="text-[17px] font-bold text-[#111827]">Tiền đặt
+                                                    cọc</b></label><span
+                                                class="c-car-info__total_black text-[18px] font-bold text-[#111827]" id="modal-deposit-price-bonus">0đ</span>
+                                        </div>
+                                        <div class="d-flex mb-1 justify-content-between align-items-center">
+                                            <label>Voucher</label><span
+                                                class="text-[#FF0000] font-semibold" id="modal-voucher-price-bonus">-0đ</span>
+                                        </div>
+                                        <hr>
+                                        <div class="d-flex justify-content-between align-items-center"><label><b>Thanh
+                                                    toán*</b></label><span class="c-car-info__total" id="modal-final-payment-bonus">0đ</span>
+                                        </div>
+                                        <div class="d-flex align-items-center mt-1"><span
+                                                class="text-dark-theme-text font-normal text-xs">* Giá thuê xe đã bao
+                                                gồm VAT.</span></div>
+                                    </div>
+                                    <div class="c-car-info__btn d-grid py-3">
+                                        <button
+                                            id="pay-btn"
+                                            class="btn btn-primary btn-lg btn-block disabled:bg-[#F3F4F6] disabled:border-[#F3F4F6] disabled:text-[#9CA3AF] disabled:opacity-100 text-[16px] font-bold"
+                                            type="button"
+                                            disabled>
+                                            Thanh toán <span id="modal-btn-payment">0đ</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <iframe id="pick-time-iframe" src="../pick-time/pick-time.html"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; border: none; z-index: 10; background: rgba(0,0,0,0.3);">
+                    </iframe>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- LOGIC CHECKBOX VÀ NÚT THANH TOÁN ---
+        const checkbox1 = document.getElementById('terms');
+        const checkbox2 = document.getElementById('term-data');
+        const payBtn = document.getElementById('pay-btn');
+
+        function updatePayBtn() {
+            if (checkbox1.checked && checkbox2.checked) {
+                payBtn.disabled = false;
+                payBtn.style.backgroundColor = '#00d287';
+                payBtn.style.borderColor = '#00d287';
+                payBtn.style.color = '#fff';
+            } else {
+                payBtn.disabled = true;
+                payBtn.style.backgroundColor = '#F3F4F6';
+                payBtn.style.borderColor = '#F3F4F6';
+                payBtn.style.color = '#9CA3AF';
+            }
+        }
+        checkbox1.addEventListener('change', updatePayBtn);
+        checkbox2.addEventListener('change', updatePayBtn);
+        updatePayBtn(); // Initialize button state
+
+        // --- LOGIC DROPDOWN ĐỊA CHỈ ---
+        const pickupTrigger = document.getElementById('pickup-trigger');
+        const pickupDropdown = document.getElementById('pickup-dropdown');
+        const pickupSelected = document.getElementById('pickup-selected');
+        const pickupOptions = pickupDropdown.querySelectorAll('.pickup-option');
+
+        if (pickupTrigger && pickupDropdown && pickupSelected && pickupOptions) {
+            pickupTrigger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                pickupDropdown.style.display = pickupDropdown.style.display === 'none' ? 'block' : 'none';
+            });
+            pickupOptions.forEach(function(option) {
+                option.addEventListener('click', function(e) {
+                    const text = option.querySelector('span').textContent;
+                    pickupSelected.textContent = text;
+                    // Cập nhật text hiển thị ở box xanh
+                    document.getElementById('display-location').textContent = text;
+                    pickupDropdown.style.display = 'none';
+                    e.stopPropagation();
+                });
+            });
+            document.addEventListener('click', function (e) {
+                if (pickupDropdown.style.display === 'block' && !pickupTrigger.contains(e.target)) {
+                    pickupDropdown.style.display = 'none';
+                }
+            });
+        }
+
+        /* --- SCRIPT ĐIỀU KHIỂN MODAL --- */
+
+        // Lấy iframe của modal con (pick-time)
+        const pickTimeIframe = document.getElementById('pick-time-iframe');
+
+        // Biến lưu giá gốc và cọc của xe hiện tại
+        let currentCarBasePrice = 0;
+        let currentDepositPerDay = 0;
+        let currentDepositPerMonth = 0;
+        let currentRentalDuration = 1; // Mặc định là 1 ngày/tháng
+        let currentRentalUnit = 'day'; // 'day' or 'month'
+
+        // Hàm tiện ích để định dạng tiền
+        function formatCurrency(num) {
+            if (isNaN(num)) return '0đ';
+            return new Intl.NumberFormat('vi-VN').format(num) + 'đ';
+        }
+
+        // Hàm tiện ích để parse ngày DD/MM/YYYY
+        function parseDate(dateStr) {
+            const parts = dateStr.split('/');
+            if (parts.length === 3) {
+                // Month is 0-indexed in JS Date
+                return new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+            }
+            return null;
+        }
+
+        // Hàm tính số ngày giữa 2 date string (DD/MM/YYYY)
+        function calculateDaysDifference(startDateStr, endDateStr) {
+            const startDate = parseDate(startDateStr);
+            const endDate = parseDate(endDateStr);
+            if (!startDate || !endDate || endDate <= startDate) {
+                return 1; // Mặc định là 1 ngày nếu có lỗi hoặc ngày trả <= ngày nhận
+            }
+            // Tính số mili giây chênh lệch và đổi ra ngày
+            const diffTime = Math.abs(endDate - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays;
+        }
+
+        // Hàm cập nhật bảng giá
+        function updatePriceTable(duration, unit, basePricePerUnit, deposit) {
+            const totalBasePrice = basePricePerUnit * duration;
+            const voucher = 0; // Tạm thời
+            const finalPayment = totalBasePrice + deposit - voucher;
+
+            document.getElementById('modal-base-price').textContent = formatCurrency(totalBasePrice);
+            document.getElementById('modal-total-price').textContent = formatCurrency(totalBasePrice);
+            document.getElementById('modal-deposit-price').textContent = formatCurrency(deposit);
+            document.getElementById('modal-voucher-price').textContent = `-${formatCurrency(voucher)}`;
+            document.getElementById('modal-final-payment').textContent = formatCurrency(finalPayment);
+
+            document.getElementById('modal-base-price-bonus').textContent = formatCurrency(totalBasePrice);
+            document.getElementById('modal-total-price-bonus').textContent = formatCurrency(totalBasePrice);
+            document.getElementById('modal-deposit-price-bonus').textContent = formatCurrency(deposit);
+            document.getElementById('modal-voucher-price-bonus').textContent = `-${formatCurrency(voucher)}`;
+            document.getElementById('modal-final-payment-bonus').textContent = formatCurrency(finalPayment);
+
+            document.getElementById('modal-btn-payment').textContent = formatCurrency(finalPayment);
+        }
+
+
+        // Hàm đóng modal CHÍNH
+        function closeModal() {
+            if (window.parent) {
+                window.parent.postMessage({ type: 'closeRentalModal' }, '*');
+            }
+        }
+
+        // 1. Bấm nút "X" để đóng modal CHÍNH
+        document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+
+        // 2. Bấm vào nền mờ để đóng modal CHÍNH
+        document.querySelector('.modal-bg').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // 3. Bấm vào box SỬA THÔNG TIN THUÊ
+        document.getElementById('edit-time-trigger').addEventListener('click', () => {
+             if (pickTimeIframe) {
+                pickTimeIframe.style.display = 'block';
+                // Gửi dữ liệu hiện tại vào iframe con (nếu cần)
+                // pickTimeIframe.contentWindow.postMessage({ type: 'initializeData', ... }, '*');
+            }
+        });
+
+
+        // 4. Lắng nghe data từ CÁC IFRAME (cả trang detail và pick-time)
+        window.addEventListener('message', (event) => {
+
+            // Nhận data xe từ trang car-detail
+            if (event.data && event.data.type === 'loadCarData') {
+                const carData = event.data.data;
+
+                // Cập nhật tên xe và ảnh
+                document.getElementById('modal-car-title').textContent = carData.title;
+                if(carData.images && carData.images.length > 0) {
+                    document.getElementById('modal-car-image').src = carData.images[0];
+                }
+                document.getElementById('modal-car-image').alt = carData.title;
+
+                // Lưu lại giá gốc và cọc
+                currentCarBasePrice = parseFloat(carData.price.replace(/\./g, ''));
+                currentDepositPerDay = carData.depositPerDay;
+                currentDepositPerMonth = carData.depositPerMonth;
+
+                // Cập nhật bảng giá lần đầu (mặc định 1 ngày)
+                currentRentalDuration = 1;
+                currentRentalUnit = 'day';
+                updatePriceTable(currentRentalDuration, currentRentalUnit, currentCarBasePrice, currentDepositPerDay);
+            }
+
+            // Nhận data từ modal con (pick-time)
+            if (event.data && event.data.type === 'updateRentalTime') {
+                const data = event.data.data;
+
+                // Cập nhật text hiển thị thời gian
+                document.getElementById('display-pickup-datetime').textContent = `${data.pickupTime} ${data.pickupDate}`;
+                document.getElementById('display-return-datetime').textContent = `${data.returnTime} ${data.returnDate}`;
+                currentRentalUnit = data.rentalType; // 'day' or 'month'
+
+                // Cập nhật text hiển thị loại hình thuê và thời lượng
+                if (data.rentalType === 'day') {
+                    document.getElementById('display-rental-type').textContent = 'Hình thức thuê: Theo ngày';
+                    // Tính số ngày
+                    currentRentalDuration = calculateDaysDifference(data.pickupDate, data.returnDate);
+                    document.getElementById('display-duration').textContent = `${currentRentalDuration} ngày`;
+                } else { // 'month'
+                    document.getElementById('display-rental-type').textContent = 'Hình thức thuê: Theo tháng';
+                    currentRentalDuration = parseInt(data.duration) || 1;
+                    document.getElementById('display-duration').textContent = `${currentRentalDuration} tháng`;
+                }
+
+                // Cập nhật lại bảng giá dựa trên thời gian mới
+                updatePriceTable(currentRentalDuration, currentRentalUnit, currentCarBasePrice, currentRentalUnit === 'day' ? currentDepositPerDay : currentDepositPerMonth);
+
+                // Đóng iframe con
+                if (pickTimeIframe) {
+                    pickTimeIframe.style.display = 'none';
+                }
+            }
+
+            // Nhận lệnh đóng modal con (pick-time)
+            if (event.data && event.data.type === 'closePickTime') {
+                 if (pickTimeIframe) {
+                    pickTimeIframe.style.display = 'none';
+                 }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

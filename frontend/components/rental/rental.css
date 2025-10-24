@@ -1,0 +1,95 @@
+body {
+  font-family: "Mulish";
+}
+
+.bg-secondary-light {
+  background-color: #f9fafb;
+  color: #111827;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.gf-container {
+  width: 1216px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.rental-type-btn {
+  font-size: 20px;
+  line-height: 30px;
+  position: relative;
+}
+
+.rental-type-btn:first-child {
+  background-color: #00d287;
+  color: #fff;
+}
+
+.exclusive-badge {
+  background-color: #e8eefc;
+  border-radius: 4px 4px 4px 0px;
+  color: #1464f4;
+  line-height: 24px;
+  padding: 0px 8px;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.search-btn {
+  background-color: #00d287;
+}
+
+.car-list {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 389.325px 389.337px 389.325px;
+  grid-auto-rows: 415.462px;
+}
+
+.car-item {
+    background-color: #fff;
+    box-shadow: #0000004d 2px 2px 10px 0px;
+    color: #0000; /* Thuộc tính color này của bạn có vẻ không hợp lệ, nhưng mình giữ nguyên */
+    padding: 0px 8px;
+    
+    /* === BỔ SUNG === */
+    border-radius: 8px; /* Thêm bo góc cho mượt */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Thêm hiệu ứng chuyển động */
+    text-decoration: none; /* Bỏ gạch chân link (nếu có) */
+}
+
+/* Thêm hiệu ứng khi hover */
+.car-item:hover {
+    transform: translateY(-8px); /* Nhấc thẻ lên trên 8px */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Đổ bóng đậm và rộng hơn */
+}
+
+/* --- BỔ SUNG ĐOẠN NÀY VÀO CUỐI FILE rental.css --- */
+
+.header-iframe {
+    background: transparent;
+    border: none;
+    height: auto;
+    left: 0;
+    min-height: 0;
+    pointer-events: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.mega-dropdown-iframe {
+    position: fixed;
+    top: 80px; /* Hoặc chiều cao chính xác của header */
+    left: 0;
+    width: 100%;
+    z-index: 40;
+    border: none;
+    display: none;
+    height: 0px;
+}
