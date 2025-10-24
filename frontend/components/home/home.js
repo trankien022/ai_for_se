@@ -366,6 +366,54 @@ window.addEventListener("message", function (event) {
           if (loginBox) {
             content.appendChild(loginBox);
             initEyeToggle(loginBox);
+            // Load login.js script
+            const script = document.createElement('script');
+            script.src = '/frontend/components/login/login.js';
+            script.onload = function() {
+              // Add submit handler after script loads
+              const loginForm = content.querySelector('form');
+              console.log('Login form in modal:', loginForm);
+              if (loginForm) {
+                loginForm.addEventListener('submit', async function (e) {
+                  console.log('Form submitted in modal');
+                  e.preventDefault();
+                  const email = content.querySelector('#emailLogin').value;
+                  const password = content.querySelector('input[name="password"]').value;
+                  console.log('Email:', email, 'Password:', password);
+                  try {
+                    const response = await fetch('http://localhost:3000/api/auth/login', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({ email, password })
+                    });
+                    console.log('Response status:', response.status);
+                    const data = await response.json();
+                    console.log('Response data:', data);
+                    if (response.ok) {
+                      // Send login success message to header iframe
+                      const headerIframe = document.querySelector('.header-iframe');
+                      if (headerIframe) {
+                        headerIframe.contentWindow.postMessage({
+                          type: 'loginSuccess',
+                          userName: data.user.name
+                        }, '*');
+                      }
+                      alert('Đăng nhập thành công!');
+                      // Close modal
+                      popup.classList.add("hidden");
+                    } else {
+                      alert(data.message || 'Đăng nhập thất bại');
+                    }
+                  } catch (error) {
+                    console.error('Login error:', error);
+                    alert('Lỗi kết nối');
+                  }
+                });
+              }
+            };
+            document.head.appendChild(script);
           }
           setTimeout(() => {
             content.querySelectorAll("button").forEach((closeBtn) => {
